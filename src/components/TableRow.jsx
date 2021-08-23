@@ -4,11 +4,15 @@ const TableRow = ({ users, onDelete }) => {
     return (
       <tr key={user._id}>
         <th scope='row'>{i + 1}</th>
-        <td>{user.name}</td>
+        <td style={{ fontWeight: '500' }}>{user.name}</td>
         <td>
           {user.qualities.map((quality) => {
             return (
-              <span className={`badge bg-${quality.color}`} key={quality._id}>
+              <span
+                style={{ margin: '3px 3px', fontSize: '14px' }}
+                className={`badge bg-${quality.color}`}
+                key={quality._id}
+              >
                 {quality.name}
               </span>
             )
