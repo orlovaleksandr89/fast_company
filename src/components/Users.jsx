@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import api from '../API'
-import TableRow from './TableRow'
 import { renderPhrase, spanClass } from '../utilits/helpers'
+import TableRow from './TableRow'
 
 const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll())
@@ -21,19 +21,21 @@ const Users = () => {
       </span>
       <table className='table'>
         <thead>
-          <tr>
-            <th scope='col'></th>
-            <th scope='col'>Имя</th>
-            <th scope='col'>Качества</th>
-            <th scope='col'>Профессия</th>
-            <th scope='col'>Встретился,раз</th>
-            <th scope='col'>Оценка</th>
-            <th scope='col'></th>
-          </tr>
+          <TableRow
+            tableHead={[
+              '',
+              'Имя',
+              'Качества',
+              'Профессия',
+              'Встретился,раз',
+              'Оценка',
+              '',
+            ]}
+          />
         </thead>
         <tbody>
           <TableRow
-            users={users}
+            tableData={users}
             onDelete={(id) => {
               deleteUserHandler(id)
             }}
