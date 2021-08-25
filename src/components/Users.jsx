@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import api from '../API'
+
 import { renderPhrase, spanClass } from '../utilits/helpers'
 import TableRow from './TableRow'
 
@@ -21,25 +22,27 @@ const Users = () => {
       </span>
       <table className='table'>
         <thead>
-          <TableRow
-            tableHead={[
-              '',
-              'Имя',
-              'Качества',
-              'Профессия',
-              'Встретился,раз',
-              'Оценка',
-              '',
-            ]}
-          />
+          <tr>
+            <th scope='col'></th>
+            <th scope='col'>Имя</th>
+            <th scope='col'>Качества</th>
+            <th scope='col'>Профессия</th>
+            <th scope='col'>Встретился,раз</th>
+            <th scope='col'>Оценка</th>
+            <th scope='col'></th>
+          </tr>
         </thead>
         <tbody>
-          <TableRow
-            tableData={users}
-            onDelete={(id) => {
-              deleteUserHandler(id)
-            }}
-          />
+          {users.map((user, i) => {
+            return (
+              <TableRow
+                user={user}
+                i={i}
+                onDelete={deleteUserHandler}
+                key={user._id}
+              />
+            )
+          })}
         </tbody>
       </table>
     </div>
