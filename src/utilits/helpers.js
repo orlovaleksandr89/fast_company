@@ -1,20 +1,18 @@
 export const renderPhrase = (numbers) => {
   let text = ''
-  switch (numbers) {
-    case 0:
-      text = 'Нет никого с кем можно тусануть'
-      break
-    case 1:
-      text = `${numbers} человек тусанет с тобой`
-      break
-    case 2:
-    case 3:
-    case 4:
-      text = `${numbers} человека тусанут с тобой`
-      break
-    default:
-      text = `${numbers} человек тусанут с тобой`
-  }
+
+  const lastNumber = Number(numbers.toString().split('').slice(-1))
+  if (numbers === 0) return (text = 'Нет никого с кем можно тусануть')
+  if (numbers === 1) return `${numbers} человек тусанeт с тобой`
+  if (numbers > 1 && numbers < 5)
+    return (text = `${numbers} человека тусанут с тобой`)
+
+  if (numbers > 14 && [2, 3, 4].includes(lastNumber))
+    return (text = `${numbers} человека тусанут с тобой`)
+  if (numbers > 14 && [1].includes(lastNumber))
+    return (text = `${numbers} человек тусанeт с тобой`)
+
+  text = `${numbers} человек тусанyт с тобой`
   return text
 }
 
