@@ -1,25 +1,10 @@
-import React, { useState } from 'react'
-import api from '../API'
+import React from 'react'
 
-import { renderPhrase, spanClass } from '../utilits/helpers'
-import TableRow from './TableRow'
+import User from './User'
 
-const Users = () => {
-  const [users, setUsers] = useState(api.users.fetchAll())
-
-  const deleteUserHandler = (value) => {
-    const filtered = users.filter((user) => user._id !== value)
-    setUsers(filtered)
-  }
-
+const Users = ({ users, ...rest }) => {
   return (
     <div>
-      <span
-        style={{ fontSize: '20px', margin: '20px' }}
-        className={spanClass(users.length)}
-      >
-        {renderPhrase(users.length)}
-      </span>
       <table className='table'>
         <thead>
           <tr>
@@ -29,19 +14,13 @@ const Users = () => {
             <th scope='col'>Профессия</th>
             <th scope='col'>Встретился,раз</th>
             <th scope='col'>Оценка</th>
+            <th scope='col'>Избраное</th>
             <th scope='col'></th>
           </tr>
         </thead>
         <tbody>
           {users.map((user, i) => {
-            return (
-              <TableRow
-                user={user}
-                i={i}
-                onDelete={deleteUserHandler}
-                key={user._id}
-              />
-            )
+            return <User {...user} i={i} {...rest} key={user._id} />
           })}
         </tbody>
       </table>
