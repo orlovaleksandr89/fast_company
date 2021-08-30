@@ -12,11 +12,15 @@ const App = () => {
   }
 
   const toggleBookMarkHanble = (id) => {
-    const selectedUser = users.find((user) => user._id === id)
-    selectedUser.status
-      ? delete selectedUser.status
-      : (selectedUser.status = 'saved')
-    setUsers([...users])
+    setUsers(
+      users.filter((user) => {
+        if (user._id === id) {
+          user.status = !user.status
+          return user
+        }
+        return user
+      })
+    )
   }
 
   return (
