@@ -17,23 +17,25 @@ const User = ({
 }) => {
   return (
     <tr key={_id}>
-      <td style={{ fontWeight: '500' }}>{name}</td>
-      <td>
+      <td className=" align-middle" style={{ fontWeight: '500' }}>
+        {name}
+      </td>
+      <td className=" align-middle">
         {qualities.map((quality, i) => {
           return <Quality key={i} {...quality} />
         })}
       </td>
-      <td>{profession.name}</td>
-      <td>{completedMeetings}</td>
-      <td>{rate}</td>
-      <td>
+      <td className="text-center align-middle">{profession.name}</td>
+      <td className="text-center align-middle">{completedMeetings}</td>
+      <td className="text-center align-middle">{rate}</td>
+      <td className=" align-middle">
         <Bookmark
           toggleBookMarkHanble={toggleBookMarkHanble}
           id={_id}
           status={status}
         />
       </td>
-      <td>
+      <td className=" align-middle">
         <button
           className="btn btn-danger"
           onClick={() => {
