@@ -1,5 +1,7 @@
 import React from 'react'
 import { renderPhrase, spanClass } from '../utilits/helpers'
+import PropTypes from 'prop-types'
+
 const SearchStatus = ({ users }) => {
   return (
     <span
@@ -10,5 +12,7 @@ const SearchStatus = ({ users }) => {
     </span>
   )
 }
-
+SearchStatus.propTypes = {
+  users: PropTypes.array.isRequired
+}
 export default SearchStatus

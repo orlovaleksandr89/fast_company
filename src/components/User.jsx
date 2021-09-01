@@ -1,6 +1,7 @@
 import React from 'react'
 import Quality from './quality'
 import Bookmark from './Bookmark'
+import PropTypes from 'prop-types'
 
 const User = ({
   _id,
@@ -9,14 +10,13 @@ const User = ({
   profession,
   completedMeetings,
   rate,
-  i,
+
   onDelete,
   toggleBookMarkHanble,
-  status,
+  status
 }) => {
   return (
     <tr key={_id}>
-      <th scope='row'>{i + 1}</th>
       <td style={{ fontWeight: '500' }}>{name}</td>
       <td>
         {qualities.map((quality, i) => {
@@ -35,7 +35,7 @@ const User = ({
       </td>
       <td>
         <button
-          className='btn btn-danger'
+          className="btn btn-danger"
           onClick={() => {
             onDelete(_id)
           }}
@@ -46,5 +46,16 @@ const User = ({
     </tr>
   )
 }
+User.propTypes = {
+  _id: PropTypes.string.isRequired,
+  qualities: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
+  profession: PropTypes.object.isRequired,
+  completedMeetings: PropTypes.number.isRequired,
+  rate: PropTypes.number.isRequired,
 
+  onDelete: PropTypes.func.isRequired,
+  toggleBookMarkHanble: PropTypes.func.isRequired,
+  status: PropTypes.bool
+}
 export default User
