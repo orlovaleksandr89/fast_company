@@ -16,14 +16,25 @@ const Users = ({ users: allUsers, ...rest }) => {
       <table className="table">
         <thead>
           <tr>
-            <th scope="col"></th>
-            <th scope="col">Имя</th>
-            <th scope="col">Качества</th>
-            <th scope="col">Профессия</th>
-            <th scope="col">Встретился,раз</th>
-            <th scope="col">Оценка</th>
-            <th scope="col">Избраное</th>
-            <th scope="col"></th>
+            <th scope="col" className="text-start align-middle">
+              Имя
+            </th>
+            <th scope="col" className="text-start align-middle">
+              Качества
+            </th>
+            <th scope="col" className="text-start align-middle">
+              Профессия
+            </th>
+            <th scope="col" className="text-start align-middle">
+              Встретился,раз
+            </th>
+            <th scope="col" className="text-start align-middle">
+              Оценка
+            </th>
+            <th scope="col" className="text-start align-middle">
+              Избраное
+            </th>
+            <th scope="col" className="text-start  align-middle"></th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +53,6 @@ const Users = ({ users: allUsers, ...rest }) => {
   )
 }
 Users.propTypes = {
-  users: PropTypes.array.isRequired
+  users: PropTypes.array.is
 }
 export default Users
