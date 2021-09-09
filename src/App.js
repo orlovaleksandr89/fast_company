@@ -21,7 +21,6 @@ const App = () => {
     api.users
       .fetchAll()
       .then((users) => {
-        setIsLoading(true)
         setUsers(users)
         return users
       })
@@ -30,9 +29,13 @@ const App = () => {
         setIsLoading(false)
       })
 
-    api.professions.fetchAll().then((data) => setProfessions(data))
-
-    console.log(isLoading)
+    api.professions.fetchAll().then((data) => {
+      setProfessions(data)
+      setIsLoading(false)
+    })
+    return () => {
+      setIsLoading(false)
+    }
   }, [])
 
   const toggleBookMarkHanble = (id) => {
