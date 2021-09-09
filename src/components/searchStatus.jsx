@@ -2,17 +2,19 @@ import React from 'react'
 import { renderPhrase, spanClass } from '../utilits/helpers'
 import PropTypes from 'prop-types'
 
-const SearchStatus = ({ users }) => {
+const SearchStatus = ({ userLength }) => {
   return (
-    <span
-      style={{ fontSize: '20px', margin: '20px' }}
-      className={spanClass(users.length)}
-    >
-      {renderPhrase(users.length)}
-    </span>
+    <div className="d-flex justify-content-center ">
+      <span
+        style={{ fontSize: '20px', margin: '20px' }}
+        className={spanClass(userLength)}
+      >
+        {renderPhrase(userLength)}
+      </span>
+    </div>
   )
 }
 SearchStatus.propTypes = {
-  users: PropTypes.array.isRequired
+  userLength: PropTypes.number.isRequired
 }
 export default SearchStatus

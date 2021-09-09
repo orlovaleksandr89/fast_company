@@ -8,8 +8,11 @@ const Pagination = (props) => {
   const pages = _.range(1, pageCount + 1)
   if (pageCount === 1) return null
   return (
-    <nav aria-label="Page navigation example">
-      <ul className="pagination mx-3">
+    <nav
+      aria-label="Page navigation example"
+      className="d-flex justify-content-center w-100"
+    >
+      <ul className="pagination m-0">
         {pages.map((page) => {
           return (
             <li
