@@ -7,10 +7,16 @@ import PropTypes from 'prop-types'
 const Users = ({ users: allUsers, selectedProf, setCount, ...rest }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const pageSize = 2
+  let filteredUsers
 
-  const filteredUsers = selectedProf
-    ? allUsers.filter((item) => item.profession.name === selectedProf.name)
-    : allUsers
+  if (selectedProf) {
+    filteredUsers = allUsers.filter(
+      (user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+    )
+  } else {
+    filteredUsers = allUsers
+  }
+
   const count = filteredUsers.length
 
   useEffect(() => {
@@ -24,6 +30,7 @@ const Users = ({ users: allUsers, selectedProf, setCount, ...rest }) => {
   const pageChangehandle = (pageIndex) => {
     setCurrentPage(pageIndex)
   }
+
   const users = paginate(filteredUsers, currentPage, pageSize)
   return (
     <div className="d-flex flex-column ">

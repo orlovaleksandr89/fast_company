@@ -9,7 +9,6 @@ const GroupList = ({
   selectedProf,
   resetProfessionsHandler
 }) => {
-  console.log(Array.isArray(professions))
   return (
     <div className="d-flex flex-column flex-shrink-0">
       <ul className="list-group mt-2">
@@ -33,25 +32,24 @@ const GroupList = ({
             )
           })}
 
-        {Array.isArray(professions) &&
-          professions.map((item) => {
-            return (
-              <li
-                key={item[valueProperty]}
-                onClick={() => {
-                  onItemSelect(item)
-                }}
-                className={
-                  selectedProf === item
-                    ? 'list-group-item active'
-                    : 'list-group-item '
-                }
-                role="button"
-              >
-                {item[contentProperty]}
-              </li>
-            )
-          })}
+        {professions.map((item) => {
+          return (
+            <li
+              key={item[valueProperty]}
+              onClick={() => {
+                onItemSelect(item)
+              }}
+              className={
+                selectedProf === item
+                  ? 'list-group-item active'
+                  : 'list-group-item '
+              }
+              role="button"
+            >
+              {item[contentProperty]}
+            </li>
+          )
+        })}
       </ul>
       <div className="d-flex align-items-center justify-content-center">
         <button
