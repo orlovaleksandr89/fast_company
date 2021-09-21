@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import Pagination from './Pagination'
-import User from './User'
 import { paginate } from '../utilits/paginate'
 import PropTypes from 'prop-types'
+import UsersTable from './usersTable'
+import _ from 'lodash'
 
 const Users = ({ users: allUsers, selectedProf, setCount, ...rest }) => {
   const [currentPage, setCurrentPage] = useState(1)
-  const pageSize = 2
+  const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' })
+
+  const pageSize = 4
   let filteredUsers
 
   if (selectedProf) {
@@ -31,39 +34,17 @@ const Users = ({ users: allUsers, selectedProf, setCount, ...rest }) => {
     setCurrentPage(pageIndex)
   }
 
-  const users = paginate(filteredUsers, currentPage, pageSize)
+  const sortedUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order])
+
+  const users = paginate(sortedUsers, currentPage, pageSize)
   return (
     <div className="d-flex flex-column ">
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col" className="text-start align-middle">
-              Имя
-            </th>
-            <th scope="col" className="text-start align-middle">
-              Качества
-            </th>
-            <th scope="col" className="text-start align-middle">
-              Профессия
-            </th>
-            <th scope="col" className="text-start align-middle">
-              Встретился,раз
-            </th>
-            <th scope="col" className="text-start align-middle">
-              Оценка
-            </th>
-            <th scope="col" className="text-start align-middle">
-              Избраное
-            </th>
-            <th scope="col" className="text-start  align-middle"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, i) => {
-            return <User {...user} {...rest} key={user._id} />
-          })}
-        </tbody>
-      </table>
+      <UsersTable
+        users={users}
+        {...rest}
+        setSortBy={setSortBy}
+        currentSort={sortBy}
+      />
       <div className="d-flex align-items-center justify-content-center">
         <Pagination
           itemsCount={count}
