@@ -11,7 +11,7 @@ const UsersTable = ({
   currentSort,
   setSortBy,
   toggleBookMarkHanble,
-  onDelete,
+  deleteUserHandler,
   ...rest
 }) => {
   const columns = {
@@ -39,7 +39,7 @@ const UsersTable = ({
         <button
           className="btn btn-danger"
           onClick={() => {
-            onDelete(user._id)
+            deleteUserHandler(user._id)
           }}
         >
           Delete
@@ -70,5 +70,5 @@ UsersTable.propTypes = {
   toggleBookMarkHanble: PropTypes.func,
   currentSort: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   setSortBy: PropTypes.func,
-  onDelete: PropTypes.func
+  deleteUserHandler: PropTypes.func
 }
