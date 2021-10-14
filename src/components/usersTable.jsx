@@ -21,7 +21,10 @@ const UsersTable = ({
       component: (user) => <QualityList qualities={user.qualities} />
     },
     professions: { iter: 'profession.name', name: 'Профессия' },
-    completedMeetings: { iter: 'completedMeetings', name: 'Встретился раз' },
+    completedMeetings: {
+      iter: 'completedMeetings',
+      name: 'Встретился раз'
+    },
     rate: { iter: 'rate', name: 'Оценка' },
     bookmark: {
       iter: 'status',

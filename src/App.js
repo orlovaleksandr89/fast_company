@@ -8,7 +8,7 @@ import { Switch, Route } from 'react-router-dom'
 
 const App = () => {
   return (
-    <div className="container">
+    <div className="container fluid main_container">
       <NavBar />
       <div className="col-md-12">
         <Switch>
