@@ -8,6 +8,7 @@ import GroupList from './groupList'
 import _ from 'lodash'
 import api from '../API'
 import Loader from './loader'
+import SearchBar from './SearchBar'
 
 const Users = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -16,6 +17,12 @@ const Users = () => {
   const [users, setUsers] = useState([])
   const [professions, setProfessions] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [searchValue, setSearchValue] = useState('')
+
+  const getSearchValueHandler = () => {
+    setSelectedProf()
+    setSearchValue(event.target.value)
+  }
 
   useEffect(() => {
     setIsLoading(true)
@@ -39,9 +46,11 @@ const Users = () => {
   }, [selectedProf])
 
   const resetProfessionsHandler = () => {
+    setSearchValue('')
     setSelectedProf()
   }
   const professionSelectHandle = (item) => {
+    setSearchValue('')
     setSelectedProf(item)
   }
   const pageChangehandle = (pageIndex) => {
@@ -67,14 +76,16 @@ const Users = () => {
 
   const pageSize = 3
 
-  let filteredUsers
+  let filteredUsers = users
 
   if (selectedProf) {
     filteredUsers = users.filter(
       (user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf)
     )
-  } else {
-    filteredUsers = users
+  } else if (searchValue) {
+    filteredUsers = users.filter((user) =>
+      user.name.toLowerCase().includes(searchValue.toLowerCase())
+    )
   }
 
   const sortedUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order])
@@ -90,10 +101,10 @@ const Users = () => {
     )
   }
   return (
-    <div className="container">
-      <div className="row">
+    <div className="container shadow mt-4">
+      <div className="row mb-4">
         <SearchStatus userLength={userLength} />
-        <div className="col-md-2">
+        <div className="col-md-2 mb-3">
           {professions && (
             <GroupList
               professions={professions}
@@ -104,7 +115,11 @@ const Users = () => {
           )}
         </div>
         <div className="col-md-10">
-          <div className="d-flex flex-column ">
+          <SearchBar
+            searchValue={searchValue}
+            getSearchValueHandler={getSearchValueHandler}
+          />
+          <div>
             <UsersTable
               users={cporUsers}
               setSortBy={setSortBy}
@@ -112,7 +127,7 @@ const Users = () => {
               deleteUserHandler={deleteUserHandler}
               toggleBookMarkHanble={toggleBookMarkHanble}
             />
-            <div className="d-flex align-items-center justify-content-center">
+            <div className="mb-3">
               <Pagination
                 itemsCount={userLength}
                 pageSize={pageSize}

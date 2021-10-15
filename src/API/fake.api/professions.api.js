@@ -18,7 +18,7 @@ const fetchAll = () =>
   new Promise((resolve) => {
     window.setTimeout(() => {
       resolve(professions)
-    }, 1000)
+    }, 300)
   })
 
 export default {

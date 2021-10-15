@@ -19,15 +19,17 @@ const TableBody = ({ users, columns }) => {
   }
 
   return (
-    <tbody>
-      {users.map((item) => (
-        <tr key={item._id}>
-          {Object.keys(columns).map((column) => (
-            <td key={column}>{renderContent(item, column)}</td>
-          ))}
-        </tr>
-      ))}
-    </tbody>
+    <>
+      <tbody>
+        {users.map((item) => (
+          <tr key={item._id}>
+            {Object.keys(columns).map((column) => (
+              <td key={column}>{renderContent(item, column)}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </>
   )
 }
 TableBody.propTypes = {

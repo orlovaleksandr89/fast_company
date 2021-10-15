@@ -2,6 +2,7 @@
   "name": "fast_company",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://gitname.github.io/fast_company",
   "dependencies": {
     "@popperjs/core": "^2.10.2",
     "@testing-library/jest-dom": "^5.14.1",
@@ -21,7 +22,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

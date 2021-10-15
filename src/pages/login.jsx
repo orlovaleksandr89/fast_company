@@ -7,6 +7,7 @@ import LoginForm from '../components/form/LoginForm'
 const Login = () => {
   const [data, setData] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({})
+
   const onChangeHandle = ({ target }) => {
     setData((prev) => ({ ...prev, [target.name]: target.value }))
   }
