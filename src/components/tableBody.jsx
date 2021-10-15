@@ -13,7 +13,7 @@ const TableBody = ({ users, columns }) => {
       return component
     }
     if (columns[column].iter === 'name') {
-      return <Link to={`/users/${item._id}`}>{item.name}</Link>
+      return <Link to={`/fast_company/users/${item._id}`}>{item.name}</Link>
     }
     return _.get(item, columns[column].iter)
   }

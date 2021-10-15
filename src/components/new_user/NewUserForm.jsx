@@ -4,6 +4,7 @@ import { validator } from '../../utilits/validator'
 import { newUserValidatorConfig } from '../../utilits/newUserValidatorConfig'
 import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { NEW_USER_ROUTE } from '../../utilits/constants'
 
 function NewUserForm(props) {
   const user = props.location.state
@@ -29,8 +30,8 @@ function NewUserForm(props) {
       return
     }
     localStorage.setItem('user', JSON.stringify(data))
+    history.push(NEW_USER_ROUTE)
     setData({ name: '', lastname: '', dateofbirth: '', portfolio: '' })
-    history.push('/new_user')
   }
 
   const validate = () => {

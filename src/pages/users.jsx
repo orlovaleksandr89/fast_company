@@ -5,6 +5,7 @@ import SingleUser from '../components/singleUser'
 
 const UsersPage = () => {
   const { id } = useParams()
+
   return <div>{id ? <SingleUser /> : <Users />}</div>
 }
 

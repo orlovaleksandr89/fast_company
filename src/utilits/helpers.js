@@ -25,3 +25,34 @@ export const spanClass = (lenght) => {
 
   return text
 }
+export const renderYears = (date) => {
+  let text = ''
+  const tadayYear = new Date().getFullYear()
+  const yearFromUserDate = Number(date.split('-')[0])
+
+  const difference = tadayYear - yearFromUserDate
+  const lastNumber = difference.toString().slice(-1)
+  switch (lastNumber) {
+    case '1':
+      text = 'год'
+      break
+    case '2':
+      text = 'года'
+      break
+    case '3':
+      text = 'года'
+      break
+    case '4':
+      text = 'года'
+      break
+    case '5':
+      text = 'лет'
+      break
+
+    default:
+      text = difference > 10 ? 'лет' : 'год'
+      break
+  }
+
+  return `(${difference} ${text}) `
+}

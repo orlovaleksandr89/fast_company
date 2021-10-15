@@ -5,7 +5,7 @@ import Loader from '../components/loader'
 import Quality from './quality'
 
 const SingleUser = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [, setIsLoading] = useState(false)
   const [userById, setUser] = useState({})
   const { id } = useParams()
   const history = useHistory()
@@ -20,13 +20,12 @@ const SingleUser = () => {
       })
       .then(() => setIsLoading(false))
   }, [])
-  console.log(isLoading, userById)
   if (!userById.name) {
     return <Loader />
   }
 
   return (
-    <div className="container">
+    <div className="container shadow p-3 mt-3">
       <h1>{`Имя : ${userById.name}`}</h1>
       <h2>{`Профессия : ${userById.profession.name}`}</h2>
 
@@ -36,7 +35,7 @@ const SingleUser = () => {
       <h4>{`completedMeetings: ${userById.completedMeetings}`}</h4>
 
       <button
-        className="btn btn-warning"
+        className="btn btn-secondary btn-sm mt-3"
         onClick={() => {
           history.goBack()
         }}

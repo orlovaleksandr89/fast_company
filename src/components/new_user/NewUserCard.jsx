@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { NEW_USER_EDIT_ROUTE } from '../../utilits/constants'
+import { renderYears } from '../../utilits/helpers'
 
 function NewUserCard() {
   const [user, setUser] = useState({})
@@ -8,30 +10,35 @@ function NewUserCard() {
 
   useEffect(() => {
     setUser(userIsPresent)
+
     return () => setUser(null)
   }, [])
 
   return (
     <div className="container shadow p-4">
       <div className="row">
-        <h1>Карточка студента</h1>
+        <h1>Карточка пользователя</h1>
       </div>
       {userIsPresent &&
         Object.keys(user).map((fieldName) => {
           return (
-            <div key={fieldName} className="row">
+            <div key={fieldName} className="row mt-3">
               <div className="col-md-2 fw-bold">
-                <p>{fieldName}:</p>
+                <p>{fieldName}</p>
               </div>
-              <div className="col-md-2">
-                <span>{user[fieldName]}</span>
+              <div className="col-md-4">
+                <span>
+                  {fieldName === 'dateofbirth'
+                    ? user[fieldName] + ' ' + renderYears(user.dateofbirth)
+                    : user[fieldName]}
+                </span>
               </div>
             </div>
           )
         })}
       {!userIsPresent && <p>Пока что пусто</p>}
 
-      <Link to={{ pathname: '/new_user/edit', state: user }}>
+      <Link to={{ pathname: NEW_USER_EDIT_ROUTE, state: user }}>
         <button className="btn btn-primary btn-sm ">
           {!userIsPresent ? 'Добавить' : 'Изменить'}
         </button>
