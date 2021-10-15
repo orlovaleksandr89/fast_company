@@ -2,4 +2,4 @@
 
 ## Refactoring code
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+See the result at [fast company](http://orlovaleksandr89.github.io/fast_company).

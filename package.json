@@ -2,7 +2,7 @@
   "name": "fast_company",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://gitname.github.io/fast_company",
+  "homepage": "http://orlovaleksandr89.github.io/fast_company",
   "dependencies": {
     "@popperjs/core": "^2.10.2",
     "@testing-library/jest-dom": "^5.14.1",
