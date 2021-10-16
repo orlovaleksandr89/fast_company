@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import api from '../API'
-import Loader from '../components/loader'
-import Quality from './quality'
+import api from '../../API'
+import Loader from '../../components/ui/loader'
+import Quality from '../../components/ui/qualities/quality'
 
-const SingleUser = () => {
+const SingleUserPage = () => {
   const [, setIsLoading] = useState(false)
   const [userById, setUser] = useState({})
   const { id } = useParams()
@@ -46,4 +46,4 @@ const SingleUser = () => {
   )
 }
 
-export default SingleUser
+export default SingleUserPage

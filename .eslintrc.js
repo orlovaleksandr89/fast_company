@@ -19,6 +19,11 @@ module.exports = {
     'space-before-function-paren': ['error', 'never'],
     'multiline-ternary': ['error', 'always-multiline'],
     'dot-notation': 'error',
-    camelcase: 'error'
+    camelcase: 'error',
+    'operator-linebreak': [
+      2,
+      'after',
+      { overrides: { '?': 'before', ':': 'before' } }
+    ]
   }
 }

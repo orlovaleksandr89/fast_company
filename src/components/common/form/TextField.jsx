@@ -7,12 +7,16 @@ function TextField({ label, name, onChangeHandle, value, type, error }) {
   }
   const [showPassword, setShowPassword] = useState(false)
 
+  const handleChange = ({ target }) => {
+    onChangeHandle({ name: target.name, value: target.value })
+  }
+
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev)
   }
 
   return (
-    <div className="d-flex flex-column ">
+    <div className="d-flex flex-column mt-3">
       <label htmlFor={name} className="mb-2">
         {label}
       </label>
@@ -22,7 +26,7 @@ function TextField({ label, name, onChangeHandle, value, type, error }) {
           id={name}
           value={value}
           name={name}
-          onChange={onChangeHandle}
+          onChange={handleChange}
           className={getInputClasses()}
         />
         {type === 'password' && (

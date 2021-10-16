@@ -14,7 +14,7 @@ import {
   NEW_USER_ROUTE,
   USERS_ROUTE
 } from './utilits/constants'
-import SingleUser from './components/singleUser'
+import SingleUserPage from './pages/usersPage'
 
 const App = () => {
   return (
@@ -23,8 +23,8 @@ const App = () => {
       <div className="col-md-12">
         <Switch>
           <Route path={USERS_ROUTE} exact component={UsersPage} />
-          <Route path={USERS_ROUTE + '/:id'} component={SingleUser} />
-          <Route path={LOGIN_ROUTE} component={Login} />
+          <Route path={USERS_ROUTE + '/:id'} component={SingleUserPage} />
+          <Route path={LOGIN_ROUTE + '/:type?'} component={Login} />
           <Route path={NEW_USER_EDIT_ROUTE} component={NewUserForm} />
           <Route path={NEW_USER_ROUTE} exact component={NewUser} />
           <Route path={MAIN_ROUTE} exact component={Main} />

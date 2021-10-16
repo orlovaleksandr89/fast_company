@@ -15,5 +15,8 @@ export const validatorConfig = {
       message: 'Пароль должен быть не меньше 8 символов',
       value: 8
     }
+  },
+  profession: {
+    isRequired: { message: 'Профессия обязательна к выбору' }
   }
 }

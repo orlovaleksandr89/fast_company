@@ -1,5 +1,5 @@
 import React from 'react'
-import { renderPhrase, spanClass } from '../utilits/helpers'
+import { renderPhrase, spanClass } from '../../utilits/helpers'
 import PropTypes from 'prop-types'
 
 const SearchStatus = ({ userLength }) => {

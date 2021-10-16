@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import TextField from '../form/TextField'
+import TextField from '../common/form/TextField'
 import { validator } from '../../utilits/validator'
 import { newUserValidatorConfig } from '../../utilits/newUserValidatorConfig'
 import { useHistory } from 'react-router-dom'
@@ -16,7 +16,6 @@ function NewUserForm(props) {
       portfolio: ''
     }
   )
-  console.log(user)
   const [errors, setErrors] = useState({})
   const isValid = Object.keys(errors).length === 0
   const history = useHistory()

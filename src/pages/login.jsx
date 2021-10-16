@@ -1,49 +1,46 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
-import { validator } from '../utilits/validator'
-import { validatorConfig } from '../utilits/validatorConfig'
-import LoginForm from '../components/form/LoginForm'
+import LoginForm from '../components/ui/form/LoginForm'
+import { useParams } from 'react-router'
+import RegisterForm from '../components/ui/form/RegisterForm'
 
 const Login = () => {
-  const [data, setData] = useState({ email: '', password: '' })
-  const [errors, setErrors] = useState({})
-
-  const onChangeHandle = ({ target }) => {
-    setData((prev) => ({ ...prev, [target.name]: target.value }))
+  const { type } = useParams()
+  const [formType, setFormType] = useState(type === 'register' ? type : 'login')
+  const toggleFormType = () => {
+    setFormType((prev) => (prev === 'register' ? 'login' : 'register'))
   }
-  const submitHandle = (e) => {
-    try {
-      e.preventDefault()
-      const isValid = validate()
-      if (!isValid) {
-        return
-      }
-
-      console.log(data)
-      setData({ email: '', password: '' })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const validate = () => {
-    const errors = validator(data, validatorConfig)
-    setErrors(errors)
-    return Object.keys(errors).length === 0
-  }
-
-  useEffect(() => {
-    validate()
-    return () => {}
-  }, [data])
 
   return (
-    <LoginForm
-      data={data}
-      errors={errors}
-      onChangeHandle={onChangeHandle}
-      submitHandle={submitHandle}
-    />
+    <div className="container mt-4">
+      <div className="row ">
+        <div className="col-md-6  offset-md-3 shadow p-4">
+          {formType === 'register' && (
+            <>
+              <RegisterForm />
+              <p>
+                Registered?{' '}
+                <a role="button" className="fw-bold" onClick={toggleFormType}>
+                  Sign in
+                </a>
+              </p>
+            </>
+          )}
+
+          {formType !== 'register' && (
+            <>
+              <LoginForm />
+              <p>
+                Dont have an account?{' '}
+                <a role="button" className="fw-bold" onClick={toggleFormType}>
+                  Sign up
+                </a>
+              </p>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
 

@@ -15,6 +15,7 @@
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "react-select": "^5.1.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -24,7 +25,8 @@
     "eject": "react-scripts eject",
     "format": "npx prettier --write .",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "eslint": "eslint --fix --fix-type problem"
   },
   "eslintConfig": {
     "extends": [

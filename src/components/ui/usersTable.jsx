@@ -1,10 +1,9 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import TableHeader from './tableHeader'
-import TableBody from './tableBody'
-import Bookmark from './Bookmark'
-import QualityList from './qualityList'
-import Table from './table'
+
+import Bookmark from '../common/Bookmark'
+import QualityList from './qualities'
+import Table, { TableHeader, TableBody } from '../../components/common/table'
 
 const UsersTable = ({
   users,
