@@ -34,7 +34,7 @@ const fetchAll = () =>
   new Promise((resolve) => {
     window.setTimeout(() => {
       resolve(qualities)
-    }, 1000)
+    }, 0)
   })
 
 export default {

@@ -15,6 +15,7 @@ import {
   USERS_ROUTE
 } from './utilits/constants'
 import SingleUserPage from './pages/usersPage'
+import EditPage from './pages/editPage'
 
 const App = () => {
   return (
@@ -23,9 +24,18 @@ const App = () => {
       <div className="col-md-12">
         <Switch>
           <Route path={USERS_ROUTE} exact component={UsersPage} />
-          <Route path={USERS_ROUTE + '/:id'} component={SingleUserPage} />
+          <Route
+            path={USERS_ROUTE + '/:id?'}
+            exact
+            component={SingleUserPage}
+          />
+          <Route
+            path={USERS_ROUTE + '/:id/:edit?'}
+            exact
+            component={EditPage}
+          />
           <Route path={LOGIN_ROUTE + '/:type?'} component={Login} />
-          <Route path={NEW_USER_EDIT_ROUTE} component={NewUserForm} />
+          <Route path={NEW_USER_EDIT_ROUTE} exact component={NewUserForm} />
           <Route path={NEW_USER_ROUTE} exact component={NewUser} />
           <Route path={MAIN_ROUTE} exact component={Main} />
         </Switch>

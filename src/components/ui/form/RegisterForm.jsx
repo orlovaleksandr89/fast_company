@@ -6,6 +6,7 @@ import api from '../../../API'
 import SelectField from '../../common/form/SelectField'
 import RadioField from '../../common/form/RadioField'
 import MultiSelectField from '../../common/form/MultiSelectField'
+import CheckField from '../../common/form/CheckField'
 
 function RegisterForm() {
   const [professions, setProfession] = useState([])
@@ -14,7 +15,8 @@ function RegisterForm() {
     password: '',
     profession: '',
     sex: 'male',
-    qualities: []
+    qualities: [],
+    licence: false
   })
   const [errors, setErrors] = useState({})
   const [qualities, setQualities] = useState({})
@@ -41,7 +43,8 @@ function RegisterForm() {
         password: '',
         profession: '',
         sex: 'male',
-        qualities: []
+        qualities: [],
+        licence: false
       })
     } catch (error) {
       console.log(error)
@@ -108,6 +111,15 @@ function RegisterForm() {
         onChangeHandle={onChangeHandle}
         label="Выбирите качество"
       />
+
+      <CheckField
+        name="licence"
+        value={data.licence}
+        onChangeHandle={onChangeHandle}
+        error={errors.licence}
+      >
+        Подтвердить соглашение с лицензией
+      </CheckField>
 
       <button
         type="submit"

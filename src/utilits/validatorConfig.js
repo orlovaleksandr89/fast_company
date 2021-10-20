@@ -18,5 +18,15 @@ export const validatorConfig = {
   },
   profession: {
     isRequired: { message: 'Профессия обязательна к выбору' }
+  },
+  licence: {
+    isRequired: {
+      message: 'Вы не можете использовать наш сервис без принятия лицензии'
+    }
+  },
+  name: {
+    isRequired: {
+      message: 'Имя обязательно для заполнения'
+    }
   }
 }

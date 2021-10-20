@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import api from '../../API'
 import Loader from '../../components/ui/loader'
 import Quality from '../../components/ui/qualities/quality'
+import { USERS_ROUTE } from '../../utilits/constants'
 
 const SingleUserPage = () => {
   const [, setIsLoading] = useState(false)
   const [userById, setUser] = useState({})
   const { id } = useParams()
-  const history = useHistory()
 
   useEffect(() => {
     setIsLoading(true)
@@ -33,15 +33,11 @@ const SingleUserPage = () => {
         <Quality key={i} {...quality} />
       ))}
       <h4>{`completedMeetings: ${userById.completedMeetings}`}</h4>
-
-      <button
-        className="btn btn-secondary btn-sm mt-3"
-        onClick={() => {
-          history.goBack()
-        }}
+      <Link
+        to={{ pathname: USERS_ROUTE + '/' + id + '/edit', state: userById }}
       >
-        Вернутся назад
-      </button>
+        <button className="btn btn-secondary btn-sm mt-3">Редактировать</button>
+      </Link>
     </div>
   )
 }

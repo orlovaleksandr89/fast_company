@@ -12,7 +12,7 @@ const Login = () => {
   }
 
   return (
-    <div className="container mt-4">
+    <div className="container my-4">
       <div className="row ">
         <div className="col-md-6  offset-md-3 shadow p-4">
           {formType === 'register' && (
