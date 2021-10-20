@@ -28,5 +28,10 @@ export const validatorConfig = {
     isRequired: {
       message: 'Имя обязательно для заполнения'
     }
+  },
+  qualities: {
+    isRequired: {
+      message: 'Выбирете хотя б одно качество'
+    }
   }
 }

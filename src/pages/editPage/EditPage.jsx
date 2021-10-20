@@ -64,16 +64,6 @@ function EditPage({ location: { state } }) {
   }, [data])
 
   const isValid = Object.keys(errors).length === 0
-
-  const arrFromOptions = Object.keys(qualities).map((key) => ({
-    value: key,
-    label: qualities[key].name
-  }))
-  const targetNames = data.qualities.map((x) => x.name) || []
-  const defaultArr = arrFromOptions.filter((item) =>
-    targetNames.includes(item.label)
-  )
-
   return (
     <div className="container">
       <div className="row d-flex justify-content-center">
@@ -127,7 +117,7 @@ function EditPage({ location: { state } }) {
               options={qualities}
               onChangeHandle={onChangeHandle}
               label="Выбирите качество"
-              defaultValue={defaultArr}
+              defaultValue={data.qualities}
               error={errors.qualities}
             />
 

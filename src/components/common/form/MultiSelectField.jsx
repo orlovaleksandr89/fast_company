@@ -7,7 +7,8 @@ function MultiSelectField({
   name,
   onChangeHandle,
   label,
-  defaultValue
+  defaultValue,
+  error
 }) {
   const optionsArr =
     !Array.isArray(options) && typeof options === 'object'
@@ -25,7 +26,13 @@ function MultiSelectField({
 
     onChangeHandle({ name: name, value: item })
   }
-  console.log(defaultValue)
+  const defaultValueToArray = defaultValue.map((item) => ({
+    value: item._id,
+    label: item.name
+  }))
+  const getInputClasses = () => {
+    return `${error ? 'form-control is-invalid' : ''} `
+  }
 
   return (
     <div className="mb-4">
@@ -35,11 +42,12 @@ function MultiSelectField({
         isMulti
         name={name}
         options={optionsArr}
-        className="basic-multi-select"
         classNamePrefix="select"
         onChange={handleChange}
-        defaultValue={defaultValue}
+        defaultValue={defaultValueToArray}
+        className={getInputClasses()}
       />
+      {error && <div className="invalid-feedback">{error}</div>}
     </div>
   )
 }
@@ -48,7 +56,8 @@ MultiSelectField.propTypes = {
   label: PropTypes.string,
   options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   defaultValue: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  onChangeHandle: PropTypes.func
+  onChangeHandle: PropTypes.func,
+  error: PropTypes.string
 }
 
 export default MultiSelectField

@@ -11,6 +11,8 @@ export const validator = (data, config) => {
             statusValidate =
               typeof data === 'object'
                 ? Object.keys(data).length === 0
+                : Array.isArray(data)
+                ? data.length === 0
                 : data.trim() === ''
           }
         } catch (error) {
