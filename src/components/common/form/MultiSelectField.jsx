@@ -7,29 +7,30 @@ function MultiSelectField({
   name,
   onChangeHandle,
   label,
-  defaultValue,
+  defaultValue = [],
   error
 }) {
   const optionsArr =
     !Array.isArray(options) && typeof options === 'object'
       ? Object.keys(options).map((option) => ({
-          value: option,
+          value: options[option]._id,
           label: options[option].name
         }))
       : options
   const handleChange = (target) => {
     const arrFromOptions = Object.keys(options).map((key) => options[key])
-    const targetNames = target.map((x) => x.label) || []
+    const targetNames = target.map((x) => x.label)
     const item = arrFromOptions.filter((item) =>
       targetNames.includes(item.name)
     )
 
     onChangeHandle({ name: name, value: item })
   }
-  const defaultValueToArray = defaultValue.map((item) => ({
-    value: item._id,
-    label: item.name
-  }))
+  const defaultValueToArray =
+    defaultValue.map((item) => ({
+      value: item._id,
+      label: item.name
+    })) || []
   const getInputClasses = () => {
     return `${error ? 'form-control is-invalid' : ''} `
   }
