@@ -33,5 +33,15 @@ export const validatorConfig = {
     isRequired: {
       message: 'Выбирете хотя б одно качество'
     }
+  },
+  userId: {
+    isRequired: {
+      message: 'Выбирете хотя б одного пользователя'
+    }
+  },
+  content: {
+    isRequired: {
+      message: 'Поле обязательно для заполнения'
+    }
   }
 }

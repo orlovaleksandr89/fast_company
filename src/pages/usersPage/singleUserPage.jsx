@@ -1,43 +1,50 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import api from '../../API'
 import Loader from '../../components/ui/loader'
-import Quality from '../../components/ui/qualities/quality'
-import { USERS_ROUTE } from '../../utilits/constants'
+import CommentSection from '../../components/user/CommenSection'
+import MeetingsCard from '../../components/user/MeetingsCard'
+import QualityCard from '../../components/user/QualityCard'
+import UserInfoCard from '../../components/user/UserInfoCard'
 
 const SingleUserPage = () => {
-  const [, setIsLoading] = useState(false)
+  const [loading, setIsLoading] = useState(false)
   const [userById, setUser] = useState({})
+  const [allUsers, setAllUsers] = useState([])
+  const [, setComments] = useState([])
   const { id } = useParams()
 
   useEffect(() => {
     setIsLoading(true)
-    api.users
-      .getById(id)
-      .then((user) => {
-        setUser(user)
-        return user
-      })
+    api.users.getById(id).then((user) => {
+      setUser(user)
+      return user
+    })
+
+    api.users.fetchAll().then((data) => setAllUsers(data))
+    api.comments
+      .fetchAll()
+      .then((data) => setComments(data))
       .then(() => setIsLoading(false))
   }, [])
-  if (!userById.name) {
+  if (loading) {
     return <Loader />
   }
 
   return (
-    <div className="container shadow p-3 mt-3">
-      <h1>{`Имя : ${userById.name}`}</h1>
-      <h2>{`Профессия : ${userById.profession.name}`}</h2>
-
-      {userById.qualities.map((quality, i) => (
-        <Quality key={i} {...quality} />
-      ))}
-      <h4>{`completedMeetings: ${userById.completedMeetings}`}</h4>
-      <Link
-        to={{ pathname: USERS_ROUTE + '/' + id + '/edit', state: userById }}
-      >
-        <button className="btn btn-secondary btn-sm mt-3">Редактировать</button>
-      </Link>
+    <div className="container p-4">
+      {userById.name && (
+        <div className="row gutters-sm">
+          <div className="col-md-4 mb-3">
+            <UserInfoCard {...userById} />
+            <QualityCard {...userById} />
+            <MeetingsCard {...userById} />
+          </div>
+          <div className="col-md-8 ">
+            <CommentSection {...allUsers} id={id} />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

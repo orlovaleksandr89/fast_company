@@ -32,7 +32,7 @@ function MultiSelectField({
       label: item.name
     })) || []
   const getInputClasses = () => {
-    return `${error ? 'form-control is-invalid' : ''} `
+    return `${error ? 'is-invalid' : ''} `
   }
 
   return (

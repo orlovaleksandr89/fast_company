@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Loader from '../../ui/loader'
 
 function SelectField({
   defaultOption,
@@ -8,7 +9,8 @@ function SelectField({
   label,
   value,
   error,
-  name
+  name,
+  loading
 }) {
   const getInputClasses = () => {
     return `${error ? 'form-select is-invalid' : 'form-select'} `
@@ -27,6 +29,9 @@ function SelectField({
   }
   if (typeof value === 'object') {
     value = value._id
+  }
+  if (loading) {
+    return <Loader />
   }
 
   return (
@@ -66,7 +71,8 @@ SelectField.propTypes = {
   label: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   error: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
+  loading: PropTypes.bool
 }
 
 export default SelectField

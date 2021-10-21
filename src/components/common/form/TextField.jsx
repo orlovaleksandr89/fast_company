@@ -38,6 +38,7 @@ function TextField({ label, name, onChangeHandle, value, type, error }) {
             <i className={showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'}></i>
           </span>
         )}
+
         {error && <div className="invalid-feedback text-danger">{error}</div>}
       </div>
     </div>

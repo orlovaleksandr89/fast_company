@@ -65,10 +65,16 @@ function EditPage({ location: { state } }) {
 
   const isValid = Object.keys(errors).length === 0
   return (
-    <div className="container">
-      <div className="row d-flex justify-content-center">
+    <div className="container ">
+      <div className="row d-flex justify-content-start m-2">
+        <div className="col-md-2 p-2">
+          <button className="btn btn-primary" onClick={() => history.goBack()}>
+            <i className="bi bi-arrow-left"></i>
+            <span>Назад</span>
+          </button>
+        </div>
         <div
-          className="col-md-6 text-start p-4
+          className="col-md-6 text-start p-2
         "
         >
           <form
