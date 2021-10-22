@@ -58,30 +58,27 @@ export const renderYears = (date) => {
 }
 
 export const getCommentTime = (timeStamp) => {
-  const secAgo = Math.ceil((Date.now() - Number(timeStamp)) / 1000)
-  const minAgo = Math.ceil(secAgo / 60)
-  const hoursAgo = Math.ceil(minAgo / 60)
-  const daysAgo = Math.ceil(hoursAgo / 24)
+  const date = new Date(parseInt(timeStamp))
+  const dateNow = new Date()
+  const yearDif = dateNow.getFullYear() - date.getFullYear()
 
-  let text = `${minAgo} minutes ago`
-  if (minAgo <= 1) {
-    return (text = 'Только что')
-  }
-  if (minAgo > 1 && minAgo < 5) {
-    return (text = '5 минут назад')
-  }
-  if (minAgo > 5 && minAgo < 10) {
-    return (text = '10 минут назад')
-  }
-  if (minAgo > 10 && minAgo < 30) {
-    return (text = '30 минут назад')
-  }
-  if (hoursAgo > 1) {
-    return (text = `${hoursAgo} hours ago`)
-  }
-  if (daysAgo > 1) {
-    return (text = `${daysAgo} days ago`)
+  if (yearDif === 0) {
+    const dayDif = dateNow.getDay() - date.getDay()
+    if (dayDif === 0) {
+      const hourDif = dateNow.getHours() - date.getHours()
+      if (hourDif === 0) {
+        const minDif = dateNow.getMinutes() - date.getMinutes()
+        if (minDif >= 0 && minDif < 5) return '1 минуту назад'
+        if (minDif >= 5 && minDif < 10) return '5 минут назад'
+        if (minDif >= 10 && minDif < 30) return '10 минут назад'
+        return '30 минут назад'
+      }
+      return `${date.getHours()} : ${date.getMinutes()}`
+    }
+    return `${date.getDay()} ${date.toLocaleString('default', {
+      month: 'long'
+    })}`
   }
 
-  return text
+  return date.getFullYear() + '.' + (date.getMonth() + 1) + '_' + date.getDate()
 }

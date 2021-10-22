@@ -8,8 +8,7 @@ import api from '../../API'
 import { validatorConfig } from '../../utilits/validatorConfig'
 import { validator } from '../../utilits/validator'
 
-function CommentSection(allUsers) {
-  const arrUsers = allUsers && Object.keys(allUsers).map((key) => allUsers[key])
+function CommentSection() {
   const { id } = useParams()
   const [data, setData] = useState({
     content: '',
@@ -17,8 +16,20 @@ function CommentSection(allUsers) {
     pageId: ''
   })
   const [errors, setErrors] = useState({})
+  const [allUsers, setAllUsers] = useState([])
   const [loading, setIsLoading] = useState(false)
   const [commentsForUser, setCommentsForUser] = useState([])
+  useEffect(() => {
+    setIsLoading(true)
+    getUsersCommentsFromDB(id)
+    api.users
+      .fetchAll()
+      .then((data) => setAllUsers(Object.keys(data).map((key) => data[key])))
+      .then(() => setIsLoading(false))
+    return () => {
+      setIsLoading(false)
+    }
+  }, [])
 
   const submitHandle = (e) => {
     try {
@@ -27,15 +38,24 @@ function CommentSection(allUsers) {
       if (!isValid) {
         return
       }
-      api.comments.add(data)
-      getUsersCommentsFromDB(id)
+      api.comments
+        .add(data)
+        .then((data) => setCommentsForUser([data, ...commentsForUser]))
 
       setData((prev) => ({ ...prev, content: '', userId: '' }))
+      setErrors({})
 
       setIsLoading(false)
     } catch (error) {
       console.log(error)
     }
+  }
+  const getUsersCommentsFromDB = (userId) => {
+    setIsLoading(true)
+    api.comments
+      .fetchCommentsForUser(userId)
+      .then((comments) => setCommentsForUser(comments.reverse()))
+      .then(() => setIsLoading(false))
   }
 
   const onChangeHandle = (target) => {
@@ -46,16 +66,6 @@ function CommentSection(allUsers) {
     setData((prev) => ({ ...prev, pageId: id }))
   }, [location])
 
-  const getUsersCommentsFromDB = (userId) => {
-    api.comments
-      .fetchCommentsForUser(userId)
-      .then((comments) => setCommentsForUser(comments.reverse()))
-  }
-
-  useEffect(() => {
-    getUsersCommentsFromDB(id)
-  }, [])
-
   const validate = () => {
     const errors = validator(data, validatorConfig)
     setErrors(errors)
@@ -63,10 +73,10 @@ function CommentSection(allUsers) {
   }
   useEffect(() => {
     validate()
-    return () => {}
   }, [data])
 
   const isValid = Object.keys(errors).length === 0
+
   return (
     <>
       <div className="card mb-2" onSubmit={submitHandle}>
@@ -75,7 +85,7 @@ function CommentSection(allUsers) {
             <h2>New Comment</h2>
             {allUsers && (
               <SelectField
-                options={arrUsers}
+                options={allUsers}
                 defaultOption="Выбирете пользователя"
                 onChangeHandle={onChangeHandle}
                 name="userId"
@@ -109,10 +119,9 @@ function CommentSection(allUsers) {
           <hr />
           <Comment
             id={id}
-            allUsers={allUsers}
-            loading={loading}
-            commentsForUser={commentsForUser}
             setCommentsForUser={setCommentsForUser}
+            commentsForUser={commentsForUser}
+            loading={loading}
           />
         </div>
       </div>

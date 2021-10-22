@@ -1,21 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import UserImage from '../ui/UserImage'
 import PropTypes from 'prop-types'
 import Loader from '../ui/loader'
 import { getCommentTime } from '../../utilits/helpers'
+import api from '../../API'
 
 function SingleCommentForUser({
   userId,
   content,
   created_at: createdAt,
-  allUsers,
-  loading,
   removeCommentHandler,
   _id
 }) {
-  const userName = Object.keys(allUsers)
-    .map((key) => allUsers[key])
-    .find((user) => user._id === userId).name
+  const [user, setUser] = useState({})
+
+  useEffect(() => {
+    api.users.getById(userId).then((user) => {
+      setUser(user)
+    })
+  }, [])
 
   if (!userId) {
     return <Loader />
@@ -32,7 +35,7 @@ function SingleCommentForUser({
               <div className="mb-4">
                 <div className="d-flex justify-content-between align-items-center">
                   <p className="mb-1 ">
-                    {userName}
+                    {user.name}
                     <span className="small ms-3">
                       {getCommentTime(createdAt)}
                     </span>
@@ -55,7 +58,7 @@ function SingleCommentForUser({
   )
 }
 SingleCommentForUser.propTypes = {
-  allUsers: PropTypes.object,
+  allUsers: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   userId: PropTypes.string,
   _id: PropTypes.string,
   content: PropTypes.string,

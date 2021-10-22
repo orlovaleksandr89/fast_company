@@ -14,6 +14,7 @@ function EditPage({ location: { state } }) {
   const { id } = useParams()
   const history = useHistory()
   const [professions, setProfessions] = useState([])
+
   const [data, setData] = useState({
     ...state,
     email: state.email || '',
@@ -33,8 +34,8 @@ function EditPage({ location: { state } }) {
   }
 
   useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfessions(data))
     api.qualities.fetchAll().then((data) => setQualities(data))
+    api.professions.fetchAll().then((data) => setProfessions(data))
   }, [])
 
   const submitHandle = (e) => {
@@ -66,15 +67,15 @@ function EditPage({ location: { state } }) {
   const isValid = Object.keys(errors).length === 0
   return (
     <div className="container ">
-      <div className="row d-flex justify-content-start m-2">
-        <div className="col-md-2 p-2">
+      <div className="row d-flex justify-content-start m-4">
+        <div className="col-md-2">
           <button className="btn btn-primary" onClick={() => history.goBack()}>
             <i className="bi bi-arrow-left"></i>
             <span>Назад</span>
           </button>
         </div>
         <div
-          className="col-md-6 text-start p-2
+          className="col-md-6 text-start p-4 shadow
         "
         >
           <form
