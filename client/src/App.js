@@ -10,6 +10,7 @@ import SingleUserPage from './pages/usersPage'
 import EditPage from './pages/editPage'
 import ProfessionProvider from './hooks/useProfession'
 import QualityProvider from './hooks/useQualities'
+import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
   return (
