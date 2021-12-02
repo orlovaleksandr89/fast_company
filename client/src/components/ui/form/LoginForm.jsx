@@ -3,15 +3,20 @@ import TextField from '../../common/form/TextField'
 import { validator } from '../../../utilits/validator'
 import { validatorConfig } from '../../../utilits/validatorConfig'
 import CheckField from '../../common/form/CheckField'
+import { useAuth } from '../../../hooks/useAuth'
+import { useHistory } from 'react-router-dom'
+import { MAIN_ROUTE } from '../../../utilits/constants'
 
 function LoginForm() {
+  const history = useHistory()
   const [data, setData] = useState({ email: '', password: '', stayOn: false })
   const [errors, setErrors] = useState({})
   const onChangeHandle = (target) => {
     setData((prev) => ({ ...prev, [target.name]: target.value }))
   }
+  const { login } = useAuth()
 
-  const submitHandle = (e) => {
+  const submitHandle = async (e) => {
     try {
       e.preventDefault()
       const isValid = validate()
@@ -19,10 +24,10 @@ function LoginForm() {
         return
       }
 
-      console.log(data)
-      setData({ email: '', password: '', stayOn: false })
+      await login(data)
+      history.push(MAIN_ROUTE)
     } catch (error) {
-      console.log(error)
+      setErrors(error)
     }
   }
 

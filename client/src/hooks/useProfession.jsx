@@ -36,7 +36,7 @@ const ProfessionProvider = ({ children }) => {
     return professions.find((x) => x._id === id)
   }
   function errorCatcher(error) {
-    const { message } = error.responce.data
+    const { message } = error.response.data
     setError(message)
     setLoading(false)
   }

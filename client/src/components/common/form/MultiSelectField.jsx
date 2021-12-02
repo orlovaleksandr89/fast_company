@@ -17,14 +17,14 @@ function MultiSelectField({
           label: options[option].name
         }))
       : options
-  const handleChange = (target) => {
-    const arrFromOptions = Object.keys(options).map((key) => options[key])
-    const targetNames = target.map((x) => x.label)
-    const item = arrFromOptions.filter((item) =>
-      targetNames.includes(item.name)
-    )
+  const handleChange = (value) => {
+    // const arrFromOptions = Object.keys(options).map((key) => options[key])
+    // const targetNames = target.map((x) => x.label)
+    // const item = arrFromOptions.filter((item) =>
+    //   targetNames.includes(item.name)
+    // )
 
-    onChangeHandle({ name: name, value: item })
+    onChangeHandle({ name: name, value })
   }
   const defaultValueToArray =
     defaultValue.map((item) => ({

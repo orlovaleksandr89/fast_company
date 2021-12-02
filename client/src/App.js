@@ -11,33 +11,38 @@ import EditPage from './pages/editPage'
 import ProfessionProvider from './hooks/useProfession'
 import QualityProvider from './hooks/useQualities'
 import 'react-toastify/dist/ReactToastify.css'
+import AuthProvider from './hooks/useAuth'
+import UserProvider from './hooks/useUsers'
 
 const App = () => {
   return (
     <>
-      <NavBar />
-      <div className="col-md-12">
-        <Switch>
+      <AuthProvider>
+        <NavBar />
+        <div className="col-md-12">
           <ProfessionProvider>
             <QualityProvider>
-              <Route path={USERS_ROUTE} exact component={UsersPage} />
-              <Route
-                path={USERS_ROUTE + '/:id?'}
-                exact
-                component={SingleUserPage}
-              />
-              <Route
-                path={USERS_ROUTE + '/:id/:edit?'}
-                exact
-                component={EditPage}
-              />
-              <Route path={LOGIN_ROUTE + '/:type?'} component={Login} />
+              <UserProvider>
+                <Switch>
+                  <Route path={USERS_ROUTE} exact component={UsersPage} />
+                  <Route
+                    path={USERS_ROUTE + '/:id?'}
+                    exact
+                    component={SingleUserPage}
+                  />
+                  <Route
+                    path={USERS_ROUTE + '/:id/:edit?'}
+                    exact
+                    component={EditPage}
+                  />
+                  <Route path={LOGIN_ROUTE + '/:type?'} component={Login} />
+                  <Route path={MAIN_ROUTE} exact component={Main} />
+                </Switch>
+              </UserProvider>
             </QualityProvider>
           </ProfessionProvider>
-
-          <Route path={MAIN_ROUTE} exact component={Main} />
-        </Switch>
-      </div>
+        </div>
+      </AuthProvider>
       <ToastContainer />
     </>
   )

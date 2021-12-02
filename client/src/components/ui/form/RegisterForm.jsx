@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react'
 import TextField from '../../common/form/TextField'
 import { validator } from '../../../utilits/validator'
 import { validatorConfig } from '../../../utilits/validatorConfig'
-import api from '../../../API'
 import SelectField from '../../common/form/SelectField'
 import RadioField from '../../common/form/RadioField'
 import MultiSelectField from '../../common/form/MultiSelectField'
 import CheckField from '../../common/form/CheckField'
+import { useQualities } from '../../../hooks/useQualities'
+import { useProfessions } from '../../../hooks/useProfession'
+import { useAuth } from '../../../hooks/useAuth'
+import { useHistory } from 'react-router-dom'
 
 function RegisterForm() {
-  const [professions, setProfession] = useState([])
+  const history = useHistory()
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -19,35 +22,31 @@ function RegisterForm() {
     licence: false
   })
   const [errors, setErrors] = useState({})
-  const [qualities, setQualities] = useState({})
-  console.log(data)
-  useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfession(data))
-    api.qualities.fetchAll().then((data) => setQualities(data))
-  }, [])
-
+  const { qualities } = useQualities()
+  const newQualities = qualities.map((qual) => ({
+    value: qual._id,
+    label: qual.name
+  }))
+  const { professions } = useProfessions()
+  const { signUp } = useAuth()
   const onChangeHandle = (target) => {
     setData((prev) => ({ ...prev, [target.name]: target.value }))
   }
-  const submitHandle = (e) => {
+  const submitHandle = async (e) => {
+    e.preventDefault()
+    const isValid = validate()
+    if (!isValid) {
+      return
+    }
+    const newData = {
+      ...data,
+      qualities: data.qualities.map((q) => q.value)
+    }
     try {
-      e.preventDefault()
-      const isValid = validate()
-      if (!isValid) {
-        return
-      }
-
-      console.log(data)
-      setData({
-        email: '',
-        password: '',
-        profession: '',
-        sex: 'male',
-        qualities: [],
-        licence: false
-      })
+      await signUp(newData)
+      history.push('/')
     } catch (error) {
-      console.log(error)
+      setErrors(error)
     }
   }
 
@@ -59,10 +58,10 @@ function RegisterForm() {
 
   useEffect(() => {
     validate()
-    return () => {}
   }, [data])
 
   const isValid = Object.keys(errors).length === 0
+
   return (
     <form
       onSubmit={submitHandle}
@@ -107,7 +106,7 @@ function RegisterForm() {
 
       <MultiSelectField
         name="qualities"
-        options={qualities}
+        options={newQualities}
         onChangeHandle={onChangeHandle}
         label="Выбирите качество"
       />

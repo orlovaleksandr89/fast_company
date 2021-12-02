@@ -1,29 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
-import api from '../../API'
-import Loader from '../../components/ui/loader'
+import { useUsers } from '../../hooks/useUsers'
+// import { useUsers } from '../../hooks/useUsers'
+// import Loader from '../../components/ui/loader'
 import CommentSection from '../../components/user/CommenSection'
 import MeetingsCard from '../../components/user/MeetingsCard'
 import QualityCard from '../../components/user/QualityCard'
 import UserInfoCard from '../../components/user/UserInfoCard'
 
 const SingleUserPage = () => {
-  const [loading, setIsLoading] = useState(false)
-  const [userById, setUser] = useState({})
-
   const { id } = useParams()
-
-  useEffect(() => {
-    setIsLoading(true)
-    api.users.getById(id).then((user) => {
-      setUser(user)
-      return user
-    })
-  }, [])
-
-  if (loading) {
-    return <Loader />
-  }
+  const { getUserById } = useUsers()
+  const userById = getUserById(id)
+  console.log(id, userById)
 
   return (
     <div className="container p-4">

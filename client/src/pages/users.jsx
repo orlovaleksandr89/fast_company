@@ -8,9 +8,9 @@ const UsersPage = () => {
   const { id } = useParams()
 
   return (
-    <div>
-      <UserProvider>{id ? <SingleUserPage /> : <Users />}</UserProvider>
-    </div>
+    <UserProvider>
+      <div>{id ? <SingleUserPage /> : <Users />}</div>
+    </UserProvider>
   )
 }
 
