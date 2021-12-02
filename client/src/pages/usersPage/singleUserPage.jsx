@@ -12,7 +12,6 @@ const SingleUserPage = () => {
   const { id } = useParams()
   const { getUserById } = useUsers()
   const userById = getUserById(id)
-  console.log(id, userById)
 
   return (
     <div className="container p-4">

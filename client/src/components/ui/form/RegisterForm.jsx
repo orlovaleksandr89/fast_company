@@ -10,6 +10,7 @@ import { useQualities } from '../../../hooks/useQualities'
 import { useProfessions } from '../../../hooks/useProfession'
 import { useAuth } from '../../../hooks/useAuth'
 import { useHistory } from 'react-router-dom'
+import { MAIN_ROUTE } from '../../../utilits/constants'
 
 function RegisterForm() {
   const history = useHistory()
@@ -44,7 +45,7 @@ function RegisterForm() {
     }
     try {
       await signUp(newData)
-      history.push('/')
+      history.push(MAIN_ROUTE)
     } catch (error) {
       setErrors(error)
     }

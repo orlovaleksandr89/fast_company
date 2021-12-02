@@ -49,7 +49,6 @@ const Users = () => {
       }
       return user
     })
-    console.log(newUsers)
   }
 
   const deleteUserHandler = (id) => {
