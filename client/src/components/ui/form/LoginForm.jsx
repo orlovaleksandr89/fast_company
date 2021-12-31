@@ -25,7 +25,11 @@ function LoginForm() {
       }
 
       await login(data)
-      history.push(MAIN_ROUTE)
+      history.push(
+        history.location.state
+          ? history.location.state.from.pathname
+          : MAIN_ROUTE
+      )
     } catch (error) {
       setErrors(error)
     }

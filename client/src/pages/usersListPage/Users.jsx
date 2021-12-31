@@ -9,12 +9,12 @@ import _ from 'lodash'
 import SearchBar from '../../components/SearchBar'
 import { useUsers } from '../../hooks/useUsers'
 import { useProfessions } from '../../hooks/useProfession'
+import Loader from '../../components/ui/loader'
 
 const Users = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' })
   const [selectedProf, setSelectedProf] = useState()
-
   const [searchValue, setSearchValue] = useState('')
 
   const getSearchValueHandler = () => {
@@ -22,7 +22,7 @@ const Users = () => {
     setSearchValue(event.target.value)
   }
   const { users } = useUsers()
-  const { professions } = useProfessions()
+  const { professions, loading } = useProfessions()
 
   useEffect(() => {
     setCurrentPage(1)
@@ -51,12 +51,6 @@ const Users = () => {
     })
   }
 
-  const deleteUserHandler = (id) => {
-    // const filtered = users.filter((user) => user._id !== id)
-    // setUsers(filtered)
-    console.log(id)
-  }
-
   const pageSize = 3
 
   let filteredUsers = users
@@ -73,6 +67,10 @@ const Users = () => {
   const userLength = sortedUsers.length
 
   const cporUsers = paginate(sortedUsers, currentPage, pageSize)
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className="container shadow mt-4">
@@ -98,7 +96,6 @@ const Users = () => {
               users={cporUsers}
               setSortBy={setSortBy}
               currentSort={sortBy}
-              deleteUserHandler={deleteUserHandler}
               toggleBookMarkHanble={toggleBookMarkHanble}
             />
             <div className="mb-3">

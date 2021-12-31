@@ -1,8 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useUsers } from '../../hooks/useUsers'
-// import { useUsers } from '../../hooks/useUsers'
-// import Loader from '../../components/ui/loader'
 import CommentSection from '../../components/user/CommenSection'
 import MeetingsCard from '../../components/user/MeetingsCard'
 import QualityCard from '../../components/user/QualityCard'
@@ -12,7 +10,6 @@ const SingleUserPage = () => {
   const { id } = useParams()
   const { getUserById } = useUsers()
   const userById = getUserById(id)
-
   return (
     <div className="container p-4">
       <div className="row gutters-sm">

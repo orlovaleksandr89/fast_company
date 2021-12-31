@@ -37,7 +37,7 @@ const UserProvider = ({ children }) => {
     }
   }
   function getUserById(id) {
-    return users.find((u) => u._id === id)
+    return users.find((user) => user._id === id)
   }
 
   function errorCatcher(error) {

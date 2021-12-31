@@ -1,19 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 import userService from '../services/user.service'
 import { toast } from 'react-toastify'
-import { setToken } from '../services/localStorage.service'
+import localStorageService, { setToken } from '../services/localStorage.service'
+import Loader from '../components/ui/loader'
+import { MAIN_ROUTE } from '../utilits/constants'
 
 const AuthContext = React.createContext()
-const httpAuth = axios.create()
+export const httpAuth = axios.create()
 export const useAuth = () => {
   return useContext(AuthContext)
 }
 
 const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({})
+  const [currentUser, setCurrentUser] = useState(undefined)
   const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const history = useHistory()
 
   useEffect(() => {
     if (error !== null) {
@@ -21,6 +26,29 @@ const AuthProvider = ({ children }) => {
       setError(null)
     }
   }, [error])
+
+  const getUserData = async () => {
+    try {
+      const { content } = await userService.getCurrentUser()
+      setCurrentUser(content)
+    } catch (error) {
+      errorCatcher(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (localStorageService.getAccessToken()) {
+      getUserData()
+    } else {
+      setIsLoading(false)
+    }
+  }, [])
+
+  const randomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
 
   async function signUp({ email, password, ...rest }) {
     const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`
@@ -32,7 +60,16 @@ const AuthProvider = ({ children }) => {
       })
       setToken(data)
 
-      await createUser({ _id: data.localId, email, ...rest })
+      await createUser({
+        _id: data.localId,
+        email,
+        rate: randomInt(1, 5),
+        completedMeetings: randomInt(0, 100),
+        image: `https://avatars.dicebear.com/api/avataaars/${(Math.random() + 1)
+          .toString(36)
+          .substring(7)}.svg`,
+        ...rest
+      })
     } catch (error) {
       errorCatcher(error)
       const { code, message } = error.response.data.error
@@ -68,6 +105,7 @@ const AuthProvider = ({ children }) => {
         returnSecureToken: true
       })
       setToken(data)
+      await getUserData()
     } catch (error) {
       errorCatcher(error)
       const { code, message } = error.response.data.error
@@ -85,9 +123,16 @@ const AuthProvider = ({ children }) => {
       console.log(code, message)
     }
   }
+
+  function logOut() {
+    localStorageService.removeAuthData()
+    setCurrentUser(null)
+    history.push(MAIN_ROUTE)
+  }
+
   return (
-    <AuthContext.Provider value={{ signUp, currentUser, login }}>
-      {children}
+    <AuthContext.Provider value={{ signUp, currentUser, login, logOut }}>
+      {!isLoading ? children : <Loader />}
     </AuthContext.Provider>
   )
 }

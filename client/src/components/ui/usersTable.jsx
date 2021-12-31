@@ -11,7 +11,6 @@ const UsersTable = ({
   currentSort,
   setSortBy,
   toggleBookMarkHanble,
-  deleteUserHandler,
   ...rest
 }) => {
   const columns = {
@@ -40,19 +39,19 @@ const UsersTable = ({
           status={user.status}
         />
       )
-    },
-    delete: {
-      component: (user) => (
-        <button
-          className="btn btn-danger"
-          onClick={() => {
-            deleteUserHandler(user._id)
-          }}
-        >
-          Delete
-        </button>
-      )
     }
+    // delete: {
+    //   component: (user) => (
+    //     <button
+    //       className="btn btn-danger"
+    //       onClick={() => {
+    //         deleteUserHandler(user._id)
+    //       }}
+    //     >
+    //       Delete
+    //     </button>
+    //   )
+    // }
   }
   return (
     <Table
@@ -76,6 +75,5 @@ UsersTable.propTypes = {
   users: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   toggleBookMarkHanble: PropTypes.func,
   currentSort: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  setSortBy: PropTypes.func,
-  deleteUserHandler: PropTypes.func
+  setSortBy: PropTypes.func
 }

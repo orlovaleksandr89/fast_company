@@ -16,6 +16,7 @@ function RegisterForm() {
   const history = useHistory()
   const [data, setData] = useState({
     email: '',
+    name: '',
     password: '',
     profession: '',
     sex: 'male',
@@ -69,6 +70,13 @@ function RegisterForm() {
       className="d-flex flex-column needs-validation"
     >
       <h3 className="mb-4">Register</h3>
+      <TextField
+        name="name"
+        value={data.name}
+        onChangeHandle={onChangeHandle}
+        label="Введите ваше имя"
+        error={errors.name}
+      />
       <TextField
         name="email"
         value={data.email}

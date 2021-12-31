@@ -5,7 +5,7 @@ import { USERS_ROUTE } from '../../utilits/constants'
 import { Link } from 'react-router-dom'
 
 function UserInfoCard(userById) {
-  const { name, rate, profession, _id } = userById
+  const { name, rate, profession, _id, image } = userById
   return (
     <div className="card mb-3">
       <div className="card-body">
@@ -17,7 +17,7 @@ function UserInfoCard(userById) {
           </button>
         </Link>
         <div className="d-flex flex-column align-items-center text-center position-relative">
-          <UserImage />
+          <UserImage image={image} />
           <div className="mt-3">
             <h4>{name}</h4>
             <p className="text-secondary mb-1">{profession.name}</p>
