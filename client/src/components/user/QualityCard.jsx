@@ -2,9 +2,7 @@ import React from 'react'
 import QualityList from '../ui/qualities/qualityList'
 import PropTypes from 'prop-types'
 
-function QualityCard(userById) {
-  const { qualities } = userById
-
+function QualityCard({ qualities }) {
   return (
     <div className="card mb-3">
       <div className="card-body d-flex flex-column justify-content-center text-center">
@@ -20,6 +18,6 @@ function QualityCard(userById) {
   )
 }
 QualityCard.propTypes = {
-  userById: PropTypes.array
+  qualities: PropTypes.array
 }
 export default QualityCard

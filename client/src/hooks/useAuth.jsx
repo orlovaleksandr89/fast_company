@@ -123,6 +123,16 @@ const AuthProvider = ({ children }) => {
       console.log(code, message)
     }
   }
+  async function updateUser(formData) {
+    try {
+      const { content } = await userService.updateUser(formData)
+      if (content) {
+        await getUserData()
+      }
+    } catch (error) {
+      errorCatcher(error)
+    }
+  }
 
   function logOut() {
     localStorageService.removeAuthData()
@@ -131,7 +141,9 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ signUp, currentUser, login, logOut }}>
+    <AuthContext.Provider
+      value={{ signUp, currentUser, login, logOut, updateUser }}
+    >
       {!isLoading ? children : <Loader />}
     </AuthContext.Provider>
   )

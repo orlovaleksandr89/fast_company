@@ -2,22 +2,16 @@ import React from 'react'
 
 import PropTypes from 'prop-types'
 import SingleCommentForUser from './SingleCommentForUser'
-import api from '../../API'
+import { useComments } from '../../hooks/useComments'
 
-function Comment({ id: userId, setCommentsForUser, commentsForUser, loading }) {
-  const removeCommentHandler = (id) => {
-    api.comments.remove(id)
-    api.comments
-      .fetchCommentsForUser(userId)
-      .then((data) => setCommentsForUser(data.reverse()))
-  }
-
+function Comment({ commentsForUser }) {
+  const { deleteComment } = useComments()
   if (commentsForUser.length === 0) {
     return <div>Нет комментариев, вы будете первым</div>
   }
 
-  if (loading) {
-    return <div>Loading...</div>
+  const handleRemoveComment = (id) => {
+    deleteComment(id)
   }
 
   return (
@@ -26,7 +20,7 @@ function Comment({ id: userId, setCommentsForUser, commentsForUser, loading }) {
         <SingleCommentForUser
           key={comment._id}
           {...comment}
-          removeCommentHandler={removeCommentHandler}
+          handleRemoveComment={handleRemoveComment}
         />
       ))}
     </>

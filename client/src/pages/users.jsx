@@ -9,7 +9,7 @@ const UsersPage = () => {
 
   return (
     <UserProvider>
-      <div>{id ? <SingleUserPage /> : <Users />}</div>
+      <div>{id ? <SingleUserPage userId={id} /> : <Users />}</div>
     </UserProvider>
   )
 }

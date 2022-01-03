@@ -18,12 +18,6 @@ function MultiSelectField({
         }))
       : options
   const handleChange = (value) => {
-    // const arrFromOptions = Object.keys(options).map((key) => options[key])
-    // const targetNames = target.map((x) => x.label)
-    // const item = arrFromOptions.filter((item) =>
-    //   targetNames.includes(item.name)
-    // )
-
     onChangeHandle({ name: name, value })
   }
   const defaultValueToArray =

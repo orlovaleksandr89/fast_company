@@ -10,7 +10,7 @@ export const useProfessions = () => {
 
 const ProfessionProvider = ({ children }) => {
   const [professions, setProfessions] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [profLoading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   useEffect(() => {
     getProfessions()
@@ -25,6 +25,7 @@ const ProfessionProvider = ({ children }) => {
 
   async function getProfessions() {
     try {
+      setLoading(true)
       const { content } = await professionService.get()
       setProfessions(content)
       setLoading(false)
@@ -43,7 +44,7 @@ const ProfessionProvider = ({ children }) => {
 
   return (
     <ProfessionContext.Provider
-      value={{ professions, loading, getProfessionById }}
+      value={{ professions, profLoading, getProfessionById }}
     >
       {children}
     </ProfessionContext.Provider>

@@ -10,7 +10,7 @@ export const useQualities = () => {
 
 const QualityProvider = ({ children }) => {
   const [qualities, setQualities] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [qualitiesLoading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   useEffect(() => {
     getQualities()
@@ -42,7 +42,7 @@ const QualityProvider = ({ children }) => {
   }
 
   return (
-    <qualityContext.Provider value={{ qualities, loading }}>
+    <qualityContext.Provider value={{ qualities, qualitiesLoading }}>
       {children}
     </qualityContext.Provider>
   )

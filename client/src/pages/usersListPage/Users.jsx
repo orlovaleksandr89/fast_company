@@ -10,6 +10,7 @@ import SearchBar from '../../components/SearchBar'
 import { useUsers } from '../../hooks/useUsers'
 import { useProfessions } from '../../hooks/useProfession'
 import Loader from '../../components/ui/loader'
+import { useAuth } from '../../hooks/useAuth'
 
 const Users = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -22,7 +23,8 @@ const Users = () => {
     setSearchValue(event.target.value)
   }
   const { users } = useUsers()
-  const { professions, loading } = useProfessions()
+  const { currentUser } = useAuth()
+  const { professions, profLoading } = useProfessions()
 
   useEffect(() => {
     setCurrentPage(1)
@@ -52,23 +54,29 @@ const Users = () => {
   }
 
   const pageSize = 3
+  const filterUsers = (data) => {
+    let filteredUsers = data
 
-  let filteredUsers = users
-
-  if (selectedProf) {
-    filteredUsers = users.filter((user) => user.profession === selectedProf._id)
-  } else if (searchValue) {
-    filteredUsers = users.filter((user) =>
-      user.name.toLowerCase().includes(searchValue.toLowerCase())
-    )
+    if (selectedProf) {
+      filteredUsers = data.filter(
+        (user) => user.profession === selectedProf._id
+      )
+    } else if (searchValue) {
+      filteredUsers = data.filter((user) =>
+        user.name.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    }
+    return filteredUsers.filter((user) => user._id !== currentUser._id)
   }
+
+  const filteredUsers = filterUsers(users)
 
   const sortedUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order])
   const userLength = sortedUsers.length
 
   const cporUsers = paginate(sortedUsers, currentPage, pageSize)
 
-  if (loading) {
+  if (profLoading) {
     return <Loader />
   }
 

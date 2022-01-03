@@ -3,11 +3,11 @@ import React from 'react'
 import { useProfessions } from '../../hooks/useProfession'
 
 function Profession({ id }) {
-  const { loading, getProfessionById } = useProfessions()
+  const { getProfessionById } = useProfessions()
 
   const profession = getProfessionById(id)
 
-  return <div>{!loading ? profession.name : 'loading'}</div>
+  return <div>{profession && profession.name}</div>
 }
 Profession.propTypes = {
   id: PropTypes.string
