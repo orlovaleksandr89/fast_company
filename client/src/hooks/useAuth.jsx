@@ -9,7 +9,13 @@ import Loader from '../components/ui/loader'
 import { MAIN_ROUTE } from '../utilits/constants'
 
 const AuthContext = React.createContext()
-export const httpAuth = axios.create()
+
+export const httpAuth = axios.create({
+  baseURL: 'https://identitytoolkit.googleapis.com/v1/',
+  params: {
+    key: process.env.REACT_APP_FIREBASE_KEY
+  }
+})
 export const useAuth = () => {
   return useContext(AuthContext)
 }
@@ -51,7 +57,7 @@ const AuthProvider = ({ children }) => {
   }
 
   async function signUp({ email, password, ...rest }) {
-    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`
+    const url = `accounts:signUp`
     try {
       const { data } = await httpAuth.post(url, {
         email,
@@ -97,7 +103,7 @@ const AuthProvider = ({ children }) => {
   }
 
   async function login({ email, password }) {
-    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_KEY}`
+    const url = `accounts:signInWithPassword`
     try {
       const { data } = await httpAuth.post(url, {
         email,
@@ -126,9 +132,8 @@ const AuthProvider = ({ children }) => {
   async function updateUser(formData) {
     try {
       const { content } = await userService.updateUser(formData)
-      if (content) {
-        await getUserData()
-      }
+      setCurrentUser(content)
+      return content
     } catch (error) {
       errorCatcher(error)
     }

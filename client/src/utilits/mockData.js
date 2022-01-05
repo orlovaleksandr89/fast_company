@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import professions from '../mockData/professions.json'
 import qualities from '../mockData/qualities.json'
-import users from '../mockData/users.json'
+// import users from '../mockData/users.json'
 import httpServise from '../services/http.service'
 
 const useMockData = () => {
@@ -16,7 +16,7 @@ const useMockData = () => {
   const [progress, setProgress] = useState(0)
   const [count, setCount] = useState(0)
 
-  const summaryCount = professions.length + qualities.length + users.length
+  const summaryCount = professions.length + qualities.length
 
   const incrementCount = () => {
     setCount((prev) => prev + 1)
@@ -44,10 +44,10 @@ const useMockData = () => {
         await httpServise.put('profession/' + prof._id, prof)
         incrementCount()
       }
-      for (const user of users) {
-        await httpServise.put('user/' + user._id, user)
-        incrementCount()
-      }
+      // for (const user of users) {
+      //   await httpServise.put('user/' + user._id, user)
+      //   incrementCount()
+      // }
       for (const quality of qualities) {
         await httpServise.put('quality/' + quality._id, quality)
         incrementCount()

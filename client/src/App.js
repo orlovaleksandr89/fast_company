@@ -11,8 +11,7 @@ import {
   MAIN_ROUTE,
   USERS_ROUTE
 } from './utilits/constants'
-import SingleUserPage from './pages/usersPage'
-import EditPage from './pages/editPage'
+
 import ProfessionProvider from './hooks/useProfession'
 import QualityProvider from './hooks/useQualities'
 import 'react-toastify/dist/ReactToastify.css'
@@ -32,20 +31,10 @@ const App = () => {
               <UserProvider>
                 <Switch>
                   <ProtectedRoute
-                    path={USERS_ROUTE}
-                    exact
+                    path={USERS_ROUTE + '/:id?/:edit?'}
                     component={UsersPage}
                   />
-                  <ProtectedRoute
-                    path={USERS_ROUTE + '/:id?'}
-                    exact
-                    component={SingleUserPage}
-                  />
-                  <ProtectedRoute
-                    path={USERS_ROUTE + '/:id/:edit?'}
-                    exact
-                    component={EditPage}
-                  />
+
                   <Route path={LOGIN_ROUTE + '/:type?'} component={Login} />
                   <Route path={LOGOUT_ROUTE} component={LogOut} />
                   <Route path={MAIN_ROUTE} exact component={Main} />

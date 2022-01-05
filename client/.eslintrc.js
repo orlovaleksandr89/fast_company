@@ -29,7 +29,7 @@ module.exports = {
         named: 'never'
       }
     ],
-    'multiline-ternary': ['error', 'always-multiline'],
+    'multiline-ternary': ['off'],
     'dot-notation': 'error',
     camelcase: 'error',
     'operator-linebreak': [

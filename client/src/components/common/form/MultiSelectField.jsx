@@ -7,7 +7,7 @@ function MultiSelectField({
   name,
   onChangeHandle,
   label,
-  defaultValue = [],
+  defaultValue,
   error
 }) {
   const optionsArr =
@@ -20,11 +20,11 @@ function MultiSelectField({
   const handleChange = (value) => {
     onChangeHandle({ name: name, value })
   }
-  const defaultValueToArray =
-    defaultValue.map((item) => ({
-      value: item._id,
-      label: item.name
-    })) || []
+  // const defaultValueToArray =
+  //   defaultValue.map((item) => ({
+  //     value: item._id,
+  //     label: item.name
+  //   })) || []
   const getInputClasses = () => {
     return `${error ? 'is-invalid' : ''} `
   }
@@ -39,7 +39,7 @@ function MultiSelectField({
         options={optionsArr}
         classNamePrefix="select"
         onChange={handleChange}
-        defaultValue={defaultValueToArray}
+        defaultValue={defaultValue}
         className={getInputClasses()}
       />
       {error && <div className="invalid-feedback">{error}</div>}

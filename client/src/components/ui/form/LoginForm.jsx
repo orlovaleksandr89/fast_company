@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TextField from '../../common/form/TextField'
 import { validator } from '../../../utilits/validator'
-import { validatorConfig } from '../../../utilits/validatorConfig'
 import CheckField from '../../common/form/CheckField'
 import { useAuth } from '../../../hooks/useAuth'
 import { useHistory } from 'react-router-dom'
@@ -34,9 +33,19 @@ function LoginForm() {
       setErrors(error)
     }
   }
+  const loginValidatorConfig = {
+    email: {
+      isRequired: {
+        message: 'Email is required'
+      }
+    },
+    password: {
+      isRequired: { message: 'Password is required' }
+    }
+  }
 
   const validate = () => {
-    const errors = validator(data, validatorConfig)
+    const errors = validator(data, loginValidatorConfig)
     setErrors(errors)
 
     return Object.keys(errors).length === 0

@@ -19,6 +19,17 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     getUsers()
+  }, [])
+
+  useEffect(() => {
+    if (!loading) {
+      const newUsers = [...users]
+      const userIndex = newUsers.findIndex(
+        (user) => user._id === currentUser._id
+      )
+      newUsers[userIndex] = currentUser
+      setUsers(newUsers)
+    }
   }, [currentUser])
 
   useEffect(() => {
