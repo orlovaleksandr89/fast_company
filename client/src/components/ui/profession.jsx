@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { useProfessions } from '../../hooks/useProfession'
+import { getProfessionsById } from '../../store/professions'
+import { useSelector } from 'react-redux'
 
 function Profession({ id }) {
-  const { getProfessionById } = useProfessions()
-
-  const profession = getProfessionById(id)
+  const profession = useSelector(getProfessionsById(id))
 
   return <div>{profession && profession.name}</div>
 }

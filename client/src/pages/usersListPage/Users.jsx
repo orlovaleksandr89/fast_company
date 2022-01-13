@@ -7,10 +7,14 @@ import SearchStatus from '../../components/ui/searchStatus'
 import GroupList from '../../components/common/groupList'
 import _ from 'lodash'
 import SearchBar from '../../components/SearchBar'
-import { useUsers } from '../../hooks/useUsers'
-import { useProfessions } from '../../hooks/useProfession'
+
 import Loader from '../../components/ui/loader'
-import { useAuth } from '../../hooks/useAuth'
+import { useSelector } from 'react-redux'
+import {
+  getProfessionsList,
+  getProfessionsLoadingStatus
+} from '../../store/professions'
+import { getCurrentUserId, getUsersList } from '../../store/users'
 
 const Users = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -18,13 +22,16 @@ const Users = () => {
   const [selectedProf, setSelectedProf] = useState()
   const [searchValue, setSearchValue] = useState('')
 
-  const getSearchValueHandler = () => {
+  const getSearchValueHandler = (event) => {
     setSelectedProf()
     setSearchValue(event.target.value)
   }
-  const { users } = useUsers()
-  const { currentUser } = useAuth()
-  const { professions, profLoading } = useProfessions()
+
+  const users = useSelector(getUsersList())
+  const currentUserId = useSelector(getCurrentUserId())
+
+  const professions = useSelector(getProfessionsList())
+  const profLoading = useSelector(getProfessionsLoadingStatus())
 
   useEffect(() => {
     setCurrentPage(1)
@@ -66,7 +73,7 @@ const Users = () => {
         user.name.toLowerCase().includes(searchValue.toLowerCase())
       )
     }
-    return filteredUsers.filter((user) => user._id !== currentUser._id)
+    return filteredUsers.filter((user) => user._id !== currentUserId)
   }
 
   const filteredUsers = filterUsers(users)

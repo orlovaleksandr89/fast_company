@@ -2,16 +2,24 @@ import React from 'react'
 
 import PropTypes from 'prop-types'
 import SingleCommentForUser from './SingleCommentForUser'
-import { useComments } from '../../hooks/useComments'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteComment, getCommentsLoadingStatus } from '../../store/comments'
 
 function Comment({ commentsForUser }) {
-  const { deleteComment } = useComments()
-  if (commentsForUser.length === 0) {
-    return <div>Нет комментариев, вы будете первым</div>
-  }
+  const dispatch = useDispatch()
+  const commentLoadingStatus = useSelector(getCommentsLoadingStatus())
 
   const handleRemoveComment = (id) => {
-    deleteComment(id)
+    dispatch(deleteComment(id))
+  }
+
+  if (commentLoadingStatus) {
+    return <p>Loading....</p>
+  }
+
+  if (commentsForUser.length === 0) {
+    return <p>Никто еще не оставлял комментарии, вы будете первым</p>
   }
 
   return (

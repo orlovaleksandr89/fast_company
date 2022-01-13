@@ -6,18 +6,33 @@ import TextField from '../../components/common/form/TextField'
 import { validatorConfig } from '../../utilits/validatorConfig'
 import { validator } from '../../utilits/validator'
 import PropTypes from 'prop-types'
-import { useAuth } from '../../hooks/useAuth'
-import { useQualities } from '../../hooks/useQualities'
-import { useProfessions } from '../../hooks/useProfession'
+
 import { useHistory } from 'react-router-dom'
 import Loader from '../../components/ui/loader'
 import { USERS_ROUTE } from '../../utilits/constants'
+import { useDispatch, useSelector } from 'react-redux'
+import { getQualities, getQualitiesLoadingStatus } from '../../store/qualities'
+import {
+  getProfessionsList,
+  getProfessionsLoadingStatus
+} from '../../store/professions'
+import {
+  getCurrentUserData,
+  getUsersLoadingStatus,
+  updateUser
+} from '../../store/users'
 
 function EditPage() {
+  const dispatch = useDispatch()
   const history = useHistory()
-  const { currentUser, loading, updateUser } = useAuth()
-  const { qualities, qualitiesLoading } = useQualities()
-  const { professions, profLoading } = useProfessions()
+  const loading = useSelector(getUsersLoadingStatus())
+  const currentUser = useSelector(getCurrentUserData())
+
+  const qualities = useSelector(getQualities())
+  const qualitiesLoading = useSelector(getQualitiesLoadingStatus())
+  const professions = useSelector(getProfessionsList())
+  const profLoading = useSelector(getProfessionsLoadingStatus())
+
   const [errors, setErrors] = useState({})
   const [data, setData] = useState()
   const [isLoading, setLoading] = useState(true)
@@ -30,7 +45,6 @@ function EditPage() {
         profession: transformProfessionData(currentUser.profession)
       })
     }
-    return () => {}
   }, [qualitiesLoading, profLoading, currentUser, data, loading])
 
   useEffect(() => {
@@ -77,8 +91,7 @@ function EditPage() {
         qualities: data.qualities.map((qual) => qual.value)
       }
 
-      await updateUser({ ...formData })
-      console.log(formData)
+      dispatch(updateUser(formData))
 
       history.push(USERS_ROUTE + '/' + currentUser._id)
     } catch (error) {

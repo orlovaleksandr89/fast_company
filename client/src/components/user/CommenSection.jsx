@@ -4,25 +4,35 @@ import TextArea from '../common/form/TextArea'
 import PropTypes from 'prop-types'
 import { validatorConfig } from '../../utilits/validatorConfig'
 import { validator } from '../../utilits/validator'
-import { useComments } from '../../hooks/useComments'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  createComment,
+  getCommentsList,
+  getCommentsLoadingStatus,
+  loadCommentsList
+} from '../../store/comments'
+import { getCurrentUserId } from '../../store/users'
 
-function CommentSection() {
+function CommentSection({ userId }) {
+  const dispatch = useDispatch()
+  const currentUserId = useSelector(getCurrentUserId())
+  const commentLoadingStatus = useSelector(getCommentsLoadingStatus())
   const [data, setData] = useState({ content: '' })
   const [errors, setErrors] = useState({})
 
-  const { createComment, comments } = useComments()
+  useEffect(() => {
+    dispatch(loadCommentsList(userId))
+  }, [userId])
 
-  const submitHandle = async (e) => {
-    try {
-      e.preventDefault()
-      if (!isValid) {
-        return
-      }
-      await createComment(data)
-      clearForm()
-    } catch (error) {
-      console.log(error)
+  const comments = useSelector(getCommentsList())
+
+  const submitHandle = (e) => {
+    e.preventDefault()
+    if (!isValid) {
+      return
     }
+    dispatch(createComment({ userId, data, currentUserId }))
+    clearForm()
   }
   const clearForm = () => {
     setData({ content: '' })
@@ -63,7 +73,7 @@ function CommentSection() {
             <button
               type="submit"
               className="mt-3 align-self-end btn btn-primary"
-              disabled={!isValid}
+              disabled={!isValid || commentLoadingStatus}
             >
               Опубликовать
             </button>
@@ -81,8 +91,7 @@ function CommentSection() {
   )
 }
 CommentSection.propTypes = {
-  allUsers: PropTypes.object,
-  id: PropTypes.string
+  userId: PropTypes.string
 }
 
 export default CommentSection

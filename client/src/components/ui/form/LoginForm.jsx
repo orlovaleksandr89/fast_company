@@ -2,36 +2,34 @@ import React, { useEffect, useState } from 'react'
 import TextField from '../../common/form/TextField'
 import { validator } from '../../../utilits/validator'
 import CheckField from '../../common/form/CheckField'
-import { useAuth } from '../../../hooks/useAuth'
-import { useHistory } from 'react-router-dom'
 import { MAIN_ROUTE } from '../../../utilits/constants'
+import { getAuthError, logIn } from '../../../store/users'
+import { useDispatch, useSelector } from 'react-redux'
+import history from '../../../utilits/history'
+import { toast } from 'react-toastify'
 
 function LoginForm() {
-  const history = useHistory()
+  const dispatch = useDispatch()
+  const authError = useSelector(getAuthError())
   const [data, setData] = useState({ email: '', password: '', stayOn: false })
   const [errors, setErrors] = useState({})
   const onChangeHandle = (target) => {
     setData((prev) => ({ ...prev, [target.name]: target.value }))
   }
-  const { login } = useAuth()
+  useEffect(() => {
+    toast.error(authError)
+  }, [authError])
 
-  const submitHandle = async (e) => {
-    try {
-      e.preventDefault()
-      const isValid = validate()
-      if (!isValid) {
-        return
-      }
-
-      await login(data)
-      history.push(
-        history.location.state
-          ? history.location.state.from.pathname
-          : MAIN_ROUTE
-      )
-    } catch (error) {
-      setErrors(error)
+  const submitHandle = (e) => {
+    e.preventDefault()
+    const isValid = validate()
+    if (!isValid) {
+      return
     }
+    const redirect = history.location.state
+      ? history.location.state.from.pathname
+      : MAIN_ROUTE
+    dispatch(logIn({ data, redirect }))
   }
   const loginValidatorConfig = {
     email: {

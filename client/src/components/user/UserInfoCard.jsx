@@ -3,11 +3,12 @@ import UserImage from '../ui/UserImage'
 import PropTypes from 'prop-types'
 import { USERS_ROUTE } from '../../utilits/constants'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../../hooks/useAuth'
+import { getCurrentUserData } from '../../store/users'
+import { useSelector } from 'react-redux'
 
 function UserInfoCard(userById) {
   const { name, rate, profession, _id, image } = userById
-  const { currentUser } = useAuth()
+  const currentUser = useSelector(getCurrentUserData())
   return (
     <div className="card mb-3">
       <div className="card-body">

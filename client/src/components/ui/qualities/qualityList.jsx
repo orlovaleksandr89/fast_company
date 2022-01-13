@@ -1,16 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Quality from './quality'
 import PropTypes from 'prop-types'
-import { useQualities } from '../../../hooks/useQualities'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  getQualitiesById,
+  getQualitiesLoadingStatus,
+  loadQualitiesList
+} from '../../../store/qualities'
+import Loader from '../loader'
 
 const QualityList = ({ qualities: qualitiesArr }) => {
-  const { qualities } = useQualities()
+  const dispatch = useDispatch()
+  const isLoading = useSelector(getQualitiesLoadingStatus())
+  const qualitiesById = useSelector(getQualitiesById(qualitiesArr))
 
-  const intersection = qualities.filter((x) => qualitiesArr.includes(x._id))
+  useEffect(() => {
+    dispatch(loadQualitiesList())
+  }, [])
+
+  if (isLoading) {
+    return <Loader />
+  }
   return (
     <>
-      {intersection.map((quality, i) => {
-        return <Quality key={i} {...quality} />
+      {qualitiesById.map((quality) => {
+        return <Quality key={quality._id} {...quality} />
       })}
     </>
   )
@@ -18,4 +32,4 @@ const QualityList = ({ qualities: qualitiesArr }) => {
 QualityList.propTypes = {
   qualities: PropTypes.array
 }
-export default QualityList
+export default React.memo(QualityList)

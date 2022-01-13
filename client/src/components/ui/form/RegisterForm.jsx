@@ -6,14 +6,13 @@ import SelectField from '../../common/form/SelectField'
 import RadioField from '../../common/form/RadioField'
 import MultiSelectField from '../../common/form/MultiSelectField'
 import CheckField from '../../common/form/CheckField'
-import { useQualities } from '../../../hooks/useQualities'
-import { useProfessions } from '../../../hooks/useProfession'
-import { useAuth } from '../../../hooks/useAuth'
-import { useHistory } from 'react-router-dom'
-import { MAIN_ROUTE } from '../../../utilits/constants'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { getQualities } from '../../../store/qualities'
+import { getProfessionsList } from '../../../store/professions'
+import { signUp } from '../../../store/users'
 
 function RegisterForm() {
-  const history = useHistory()
   const [data, setData] = useState({
     email: '',
     name: '',
@@ -23,18 +22,20 @@ function RegisterForm() {
     qualities: [],
     licence: false
   })
+  const dispatch = useDispatch()
   const [errors, setErrors] = useState({})
-  const { qualities } = useQualities()
+
+  const qualities = useSelector(getQualities())
   const newQualities = qualities.map((qual) => ({
     value: qual._id,
     label: qual.name
   }))
-  const { professions } = useProfessions()
-  const { signUp } = useAuth()
+  const professions = useSelector(getProfessionsList())
+
   const onChangeHandle = (target) => {
     setData((prev) => ({ ...prev, [target.name]: target.value }))
   }
-  const submitHandle = async (e) => {
+  const submitHandle = (e) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) {
@@ -44,12 +45,8 @@ function RegisterForm() {
       ...data,
       qualities: data.qualities.map((q) => q.value)
     }
-    try {
-      await signUp(newData)
-      history.push(MAIN_ROUTE)
-    } catch (error) {
-      setErrors(error)
-    }
+
+    dispatch(signUp(newData))
   }
 
   const validate = () => {
