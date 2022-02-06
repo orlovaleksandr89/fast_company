@@ -10,7 +10,7 @@ const schema = new Schema(
       required: true,
       unique: true
     },
-    passwords: {
+    password: {
       type: String,
       required: true
     },
