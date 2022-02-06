@@ -1,23 +1,12 @@
-const express = require("express");
-const userRoute = require("./user.route");
-const authRoute = require("./auth.route");
-const qualityRoute = require("./quality.route");
-const professionRoute = require("./profession.route");
-const router = express.Router({ mergeParams: true });
+const express = require('express')
 
-router.use("/auth", authRoute);
-router.use("/user", userRoute);
-router.use("/quality", qualityRoute);
-router.use("/profession", professionRoute);
+const router = express.Router({
+  mergeParams: true
+})
+router.use('/auth', require('./auth.routes'))
+router.use('/comment', require('./comment.routes'))
+router.use('/quality', require('./quality.routes'))
+router.use('/profession', require('./profession.routes'))
+router.use('/user', require('./user.routes'))
 
-module.exports = function (app) {
-    app.use(function (req, res, next) {
-        res.header(
-            "Access-Control-Allow-Headers",
-            "x-access-token, Origin, Content-Type, Accept"
-        );
-        next();
-    });
-
-    app.use("/api/v1", router);
-};
+module.exports = router

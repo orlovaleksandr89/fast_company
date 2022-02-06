@@ -1,0 +1,4 @@
+{
+  "PORT": 8080,
+  "MONGO_URI": "mongodb+srv://orlov:qwerty1234@cluster0.nbqqo.mongodb.net/fast-company?retryWrites=true&w=majority"
+}
