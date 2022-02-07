@@ -1,0 +1,6 @@
+{
+  "PORT": 8080,
+  "MONGO_URI": "mongodb+srv://orlov:qwerty1234@cluster0.nbqqo.mongodb.net/fast-company?retryWrites=true&w=majority",
+  "ACCESS_SECRET": "secret_key_jwt_sign",
+  "REFRESH_SECRET": "secret_key_refresh_jwt_sign"
+}
