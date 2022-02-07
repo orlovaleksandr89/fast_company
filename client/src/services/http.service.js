@@ -6,16 +6,18 @@ import localStorageService from './localStorage.service'
 const http = axios.create({
   baseURL: configFile.apiEndPoint
 })
-
 http.interceptors.request.use(
   async function (config) {
+    const expiresDate = localStorageService.getExpiresIn()
+    const refreshToken = localStorageService.getRefreshToken()
+    const isExpired = refreshToken && expiresDate < Date.now()
+
     if (configFile.isFireBase) {
       const containSlash = /\/$/gi.test(config.url)
       config.url =
         (containSlash ? config.url.slice(0, -1) : config.url) + '.json'
-      const expiresDate = localStorageService.getExpiresIn()
-      const refreshToken = localStorageService.getRefreshToken()
-      if (refreshToken && expiresDate < Date.now()) {
+
+      if (isExpired) {
         const data = await authService.refresh()
         localStorageService.setToken({
           refreshToken: data.refresh_token,
@@ -27,6 +29,18 @@ http.interceptors.request.use(
       const accessToken = localStorageService.getAccessToken()
       if (accessToken) {
         config.params = { ...config.params, auth: accessToken }
+      }
+    } else {
+      if (isExpired) {
+        const data = await authService.refresh()
+        localStorageService.setToken(data)
+      }
+      const accessToken = localStorageService.getAccessToken()
+      if (accessToken) {
+        config.headers = {
+          ...config.headers,
+          Authorization: `Bearer ${accessToken}`
+        }
       }
     }
     return config
@@ -45,6 +59,7 @@ http.interceptors.response.use(
     if (configFile.isFireBase) {
       response.data = { content: transformData(response.data) }
     }
+    response.data = { content: response.data }
     return response
   },
   function (error) {

@@ -59,4 +59,4 @@ SingleCommentForUser.propTypes = {
   handleRemoveComment: PropTypes.func,
   created_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }
-export default SingleCommentForUser
+export default React.memo(SingleCommentForUser)
