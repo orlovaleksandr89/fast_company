@@ -58,7 +58,7 @@ export const renderYears = (date) => {
 }
 
 export const getCommentTime = (timeStamp) => {
-  const date = new Date(parseInt(timeStamp))
+  const date = new Date(timeStamp)
   const dateNow = new Date()
   const yearDif = dateNow.getFullYear() - date.getFullYear()
 

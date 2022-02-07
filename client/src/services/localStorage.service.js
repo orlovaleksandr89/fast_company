@@ -5,13 +5,13 @@ const USERID_KEY = 'user-local-id'
 
 export const setToken = ({
   refreshToken,
-  idToken,
-  localId,
+  accessToken,
+  userId,
   expiresIn = 3600
 }) => {
   const expiresDate = new Date().getTime() + expiresIn * 1000
-  localStorage.setItem(TOKEN_KEY, idToken)
-  localStorage.setItem(USERID_KEY, localId)
+  localStorage.setItem(TOKEN_KEY, accessToken)
+  localStorage.setItem(USERID_KEY, userId)
   localStorage.setItem(REFRESH_KEY, refreshToken)
   localStorage.setItem(EXPIRES_KEY, expiresDate)
 }

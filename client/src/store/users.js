@@ -1,9 +1,8 @@
-import { createAction, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import authService from '../services/auth.service'
 import localStorageService from '../services/localStorage.service'
 import userService from '../services/user.service'
 import { MAIN_ROUTE, USERS_ROUTE } from '../utilits/constants'
-import { randomInt } from '../utilits/randomInt'
 import history from '../utilits/history'
 import generateAuthError from '../utilits/generateAuthError'
 
@@ -84,15 +83,12 @@ const {
   userRequestFailed,
   authRequestSuccess,
   authRequestFailed,
-  userCreated,
   userLoggedOut,
   updateUserRequested,
   userUpdatedSuccess,
   authRequested
 } = actions
 
-const userCreateRequested = createAction('users/userCreateRequested')
-const createUserFailed = createAction('users/createUserFailed')
 /* Functions to dispatch changes to state */
 
 export const loadUsersList = () => async (dispatch) => {
@@ -112,8 +108,8 @@ export const logIn =
     dispatch(authRequested())
     try {
       const data = await authService.login({ email, password })
-      dispatch(authRequestSuccess({ userId: data.localId }))
       localStorageService.setToken(data)
+      dispatch(authRequestSuccess({ userId: data.userId }))
       history.push(redirect)
     } catch (error) {
       const { code, message } = error.response.data.error
@@ -126,44 +122,17 @@ export const logIn =
     }
   }
 
-function createUser(payload) {
-  return async function (dispatch) {
-    dispatch(userCreateRequested())
-    try {
-      const { content } = await userService.create(payload)
-      dispatch(userCreated(content))
-      history.push(USERS_ROUTE)
-    } catch (error) {
-      dispatch(createUserFailed(error.message))
-    }
+export const signUp = (payload) => async (dispatch) => {
+  dispatch(usersRequested())
+  try {
+    const data = await authService.register(payload)
+    localStorageService.setToken(data)
+    dispatch(authRequestSuccess({ userId: data.userId }))
+    history.push(USERS_ROUTE)
+  } catch (error) {
+    dispatch(authRequestFailed(error.message))
   }
 }
-export const signUp =
-  ({ email, password, ...rest }) =>
-  async (dispatch) => {
-    dispatch(usersRequested())
-    try {
-      const data = await authService.register({ email, password })
-      localStorageService.setToken(data)
-      dispatch(authRequestSuccess({ userId: data.localId }))
-      dispatch(
-        createUser({
-          _id: data.localId,
-          email,
-          rate: randomInt(1, 5),
-          completedMeetings: randomInt(0, 100),
-          image: `https://avatars.dicebear.com/api/avataaars/${(
-            Math.random() + 1
-          )
-            .toString(36)
-            .substring(7)}.svg`,
-          ...rest
-        })
-      )
-    } catch (error) {
-      dispatch(authRequestFailed(error.message))
-    }
-  }
 
 export const updateUser = (payload) => async (dispatch) => {
   dispatch(updateUserRequested())
