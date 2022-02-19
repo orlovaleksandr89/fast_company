@@ -4,7 +4,7 @@ import NavBar from './components/NavBar'
 import Login from './pages/login'
 import Main from './pages/main'
 import { ToastContainer } from 'react-toastify'
-import { Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import {
   LOGIN_ROUTE,
   LOGOUT_ROUTE,
@@ -33,6 +33,7 @@ const App = () => {
           <Route path={LOGIN_ROUTE + '/:type?'} component={Login} />
           <Route path={LOGOUT_ROUTE} component={LogOut} />
           <Route path={MAIN_ROUTE} exact component={Main} />
+          <Redirect to={MAIN_ROUTE} />
         </Switch>
       </div>
 

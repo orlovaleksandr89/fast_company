@@ -4,7 +4,7 @@ const Main = () => {
     <div className="container mt-5">
       <h1>Fast company social app</h1>
 
-      <p>Welcom to my pet project.</p>
+      <p>Welcome to my pet project.</p>
       <p>
         This is a very simple social app demo where you can find someone to hang
         around.
