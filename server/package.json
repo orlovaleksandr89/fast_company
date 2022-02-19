@@ -1,13 +1,16 @@
 {
-  "name": "fast-company-server",
+  "name": "fast-company",
   "version": "1.0.0",
-  "description": "",
+  "description": "MERN app, social network demo",
   "main": "index.js",
+  "engines": {
+    "node": "16.13.x"
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "serve": "cross-env NODE_ENV=development nodemon index.js"
   },
-  "author": "",
+  "author": "Oleksandr Orlov",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
