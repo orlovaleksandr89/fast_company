@@ -6,6 +6,7 @@ const PORT = config.get('PORT') || 8080
 const initDatabase = require('./startUp/initDatabase')
 const routes = require('./routes')
 const cors = require('cors')
+const path = require('path')
 
 const app = express()
 app.use(express.json())
@@ -14,7 +15,11 @@ app.use(cors())
 app.use('/api', routes)
 
 if (process.env.NODE_ENV === 'production') {
-  console.log(chalk.blueBright('Production'))
+  app.use('/', express.static(path.join(__dirname, 'client')))
+  const indexPath = path.join(__dirname, 'client', 'index.html')
+  app.get('*', (req, res) => {
+    res.sendFile(indexPath)
+  })
 } else {
   console.log(chalk.blueBright('Development'))
 }
@@ -25,6 +30,7 @@ async function start() {
       initDatabase()
     })
     await mongoose.connect(config.get('MONGO_URI'))
+    console.log(chalk.greenBright('Mongo connected'))
     app.listen(PORT, () => {
       console.log(chalk.green(`Server has been started on port ${PORT}`))
     })
