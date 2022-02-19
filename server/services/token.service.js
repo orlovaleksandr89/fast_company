@@ -1,13 +1,14 @@
 const jwt = require('jsonwebtoken')
-const config = require('config')
+require('dotenv').config()
+
 const Token = require('../models/Token')
 
 class TokenService {
   generate(payload) {
-    const accessToken = jwt.sign(payload, config.get('ACCESS_SECRET'), {
+    const accessToken = jwt.sign(payload, process.env.ACCESS_SECRET, {
       expiresIn: '1h'
     })
-    const refreshToken = jwt.sign(payload, config.get('REFRESH_SECRET'))
+    const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET)
     return { accessToken, refreshToken, expiresIn: 3600 }
   }
 
@@ -26,14 +27,14 @@ class TokenService {
 
   validateRefresh(token) {
     try {
-      return jwt.verify(token, config.get('REFRESH_SECRET'))
+      return jwt.verify(token, process.env.REFRESH_SECRET)
     } catch (error) {
       return null
     }
   }
   validateAccessToken(accessToken) {
     try {
-      return jwt.verify(accessToken, config.get('ACCESS_SECRET'))
+      return jwt.verify(accessToken, process.env.ACCESS_SECRET)
     } catch (error) {
       return null
     }
