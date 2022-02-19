@@ -1,0 +1,27 @@
+{
+  "name": "fast_company",
+  "version": "1.0.0",
+  "description": "mern app",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": "16.13.x"
+  },
+  "scripts": {
+    "start": "npm run start --prefix ./server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orlovaleksandr89/fast_company.git"
+  },
+  "keywords": [
+    "mern"
+  ],
+  "author": "Oleksandr orlov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/orlovaleksandr89/fast_company/issues"
+  },
+  "homepage": "https://github.com/orlovaleksandr89/fast_company#readme"
+}
