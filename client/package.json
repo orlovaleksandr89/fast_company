@@ -2,7 +2,8 @@
   "name": "fast_company",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://orlovaleksandr89.github.io/fast_company",
+  "homepage": "https://fast-company-mern.herokuapp.com/",
+  "proxy": "https://fast-company-mern.herokuapp.com/",
   "dependencies": {
     "@popperjs/core": "^2.10.2",
     "@reduxjs/toolkit": "^1.7.1",
